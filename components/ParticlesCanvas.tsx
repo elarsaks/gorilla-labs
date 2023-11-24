@@ -46,6 +46,7 @@ class Particle {
 
 const ParticlesCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
   let particles: Particle[] = [];
 
   useEffect(() => {
@@ -58,6 +59,13 @@ const ParticlesCanvas: React.FC = () => {
     // Set canvas to full viewport size
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    // Create and load the image
+    imageRef.current = new Image();
+    imageRef.current.src = "/assets/logo.png";
+    imageRef.current.onload = () => {
+      drawImage(ctx);
+    };
 
     // Handle window resize
     const handleResize = () => {
@@ -75,6 +83,33 @@ const ParticlesCanvas: React.FC = () => {
       particles.push(new Particle({ size, speedX, speedY, x, y }));
     }
 
+    function drawImage(ctx: CanvasRenderingContext2D) {
+      const canvas = canvasRef.current;
+      if (!canvas || !imageRef.current) return;
+
+      const img = imageRef.current;
+      const maxWidth = canvas.width * 0.5; // 50% of canvas width
+      const maxHeight = canvas.height * 0.5; // 50% of canvas height
+      const imgRatio = img.width / img.height;
+      let imgWidth = img.width;
+      let imgHeight = img.height;
+
+      // Scale image to fit within maxWidth and maxHeight, maintaining aspect ratio
+      if (imgWidth > maxWidth) {
+        imgWidth = maxWidth;
+        imgHeight = imgWidth / imgRatio;
+      }
+      if (imgHeight > maxHeight) {
+        imgHeight = maxHeight;
+        imgWidth = imgHeight * imgRatio;
+      }
+
+      const x = (canvas.width - imgWidth) / 2; // Center horizontally
+      const y = (canvas.height - imgHeight) / 2; // Center vertically
+
+      ctx.drawImage(img, x, y, imgWidth, imgHeight);
+    }
+
     const animate = () => {
       requestAnimationFrame(animate);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -88,6 +123,7 @@ const ParticlesCanvas: React.FC = () => {
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Draw particles
       for (const particle of particles) {
         particle.update(canvas.width, canvas.height);
         particle.draw(ctx);
@@ -101,8 +137,7 @@ const ParticlesCanvas: React.FC = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 100) {
-            // You can adjust this distance
-            ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / 100})`; // The line fades with distance
+            ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / 100})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -111,6 +146,9 @@ const ParticlesCanvas: React.FC = () => {
           }
         }
       }
+
+      // Draw the image on top of the particles
+      drawImage(ctx);
     };
 
     animate();
