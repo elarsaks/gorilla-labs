@@ -79,6 +79,15 @@ const ParticlesCanvas: React.FC = () => {
       requestAnimationFrame(animate);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Create gradient
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, "rgba(5, 4, 13, 1)"); // Dark color at the top
+      gradient.addColorStop(1, "rgba(54, 127, 245, 0.5)"); // Lighter color at the bottom
+
+      // Apply gradient as background
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       for (const particle of particles) {
         particle.update(canvas.width, canvas.height);
         particle.draw(ctx);
