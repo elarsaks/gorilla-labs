@@ -6,7 +6,7 @@ import {
   faBars,
   // faFacebook,
   // faTwitter,
-  // faLinkedin,
+  faLinkedin,
   // faGithub,
   faRss,
   faAsterisk,
@@ -82,6 +82,9 @@ const CircularMenu: React.FC = () => {
     { href: "", icon: faHome },
     { href: "", icon: faRss },
     { href: "", icon: faAsterisk },
+    // { href: "", icon: faFacebook },
+    // { href: "", icon: faTwitter },
+    { href: "", icon: faLinkedin },
   ];
 
   return (
