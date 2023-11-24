@@ -1,10 +1,10 @@
-import StyledButton from "@/components/StyledButton";
+import ParticlesCanvas from "@/components/ParticlesCanvas";
 
 export default function () {
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
-      <StyledButton>Click Me</StyledButton>
+      <ParticlesCanvas />
+
       {/* Other components */}
     </div>
   );
