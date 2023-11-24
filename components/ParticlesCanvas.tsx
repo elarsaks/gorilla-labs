@@ -1,23 +1,27 @@
 import React, { useEffect, useRef } from "react";
 
 interface ParticleProps {
-  x: number;
-  y: number;
+  size: number;
   speedX: number;
   speedY: number;
+  x: number;
+  y: number;
 }
 
 class Particle {
-  x: number;
-  y: number;
+  maxSize: number = 5;
+  size: number;
   speedX: number;
   speedY: number;
+  x: number;
+  y: number;
 
-  constructor({ x, y, speedX, speedY }: ParticleProps) {
-    this.x = x;
-    this.y = y;
+  constructor({ size, speedX, speedY, x, y }: ParticleProps) {
+    this.size = size;
     this.speedX = speedX;
     this.speedY = speedY;
+    this.x = x;
+    this.y = y;
   }
 
   update(canvasWidth: number, canvasHeight: number) {
@@ -34,7 +38,7 @@ class Particle {
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fillStyle = "aqua";
     ctx.fill();
   }
@@ -67,7 +71,8 @@ const ParticlesCanvas: React.FC = () => {
       const y = Math.random() * canvas.height;
       const speedX = (Math.random() - 0.5) * 1.2;
       const speedY = (Math.random() - 0.5) * 1.2;
-      particles.push(new Particle({ x, y, speedX, speedY }));
+      const size = Math.random() * 2 + 1;
+      particles.push(new Particle({ size, speedX, speedY, x, y }));
     }
 
     const animate = () => {
