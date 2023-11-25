@@ -1,5 +1,6 @@
-import React, { useState } from "react";
 import { FaBars, FaShoppingCart, FaUser } from "react-icons/fa";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 export const NavBar = styled.nav`
@@ -42,7 +43,7 @@ export const Icons = styled.div`
   }
 `;
 
-export const Sidebar = styled.div<{ isOpen: boolean }>`
+export const Sidebar = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 65px;
   left: 0;
@@ -50,8 +51,8 @@ export const Sidebar = styled.div<{ isOpen: boolean }>`
   height: calc(100% - 50px);
   background: rgba(0, 0, 0, 0.4);
   z-index: 999;
-  transform: ${(props) =>
-    props.isOpen ? "translateX(0)" : "translateX(-100%)"};
+  transform: ${({ $isOpen }) =>
+    $isOpen ? "translateX(0)" : "translateX(-100%)"};
   transition: transform 0.3s ease-in-out;
   padding: 20px;
   box-sizing: border-box;
@@ -69,6 +70,7 @@ export const SidebarItem = styled.div`
   border-radius: 4px;
   transition: background-color 0.3s;
 
+  text-decoration: none;
   &:hover {
     background-color: #1b3f7b;
   }
@@ -76,10 +78,21 @@ export const SidebarItem = styled.div`
 
 const MenuBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // As soon as the component mounts, we acknowledge it's on the client
+    setIsClient(true);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Render nothing if it's not on the client
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <>
@@ -93,12 +106,23 @@ const MenuBar: React.FC = () => {
           <FaUser />
         </Icons>
       </NavBar>
-      <Sidebar isOpen={isMenuOpen}>
-        <SidebarItem>Home</SidebarItem>
-        <SidebarItem>Explore</SidebarItem>
-        <SidebarItem>Cart</SidebarItem>
-        <SidebarItem>Contact</SidebarItem>
-        <SidebarItem>Profile</SidebarItem>
+      <Sidebar $isOpen={isMenuOpen}>
+        <Link href="/" passHref style={{ textDecoration: "none" }}>
+          <SidebarItem>Home</SidebarItem>
+        </Link>
+
+        <Link href="/explore" passHref style={{ textDecoration: "none" }}>
+          <SidebarItem>Explore</SidebarItem>
+        </Link>
+        <Link href="/cart" passHref style={{ textDecoration: "none" }}>
+          <SidebarItem>Cart</SidebarItem>
+        </Link>
+        <Link href="/contact" passHref style={{ textDecoration: "none" }}>
+          <SidebarItem>Contact</SidebarItem>
+        </Link>
+        <Link href="/profile" passHref style={{ textDecoration: "none" }}>
+          <SidebarItem>Profile</SidebarItem>
+        </Link>
       </Sidebar>
     </>
   );
