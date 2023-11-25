@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FaBars, FaShoppingCart, FaUser } from "react-icons/fa";
-import { Sidebar, SidebarItem } from "./StyledSidebar";
 
 import styled from "styled-components";
 
@@ -15,7 +14,7 @@ export const NavBar = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  height: 40px;
+  height: 50px;
   z-index: 1000;
   font-family: Arial, sans-serif;
 `;
@@ -44,6 +43,40 @@ export const Icons = styled.div`
   }
 `;
 
+export const Sidebar = styled.div<{ isOpen: boolean }>`
+  position: fixed;
+  top: 65px;
+  left: 0;
+  width: 250px;
+  height: calc(100% - 50px); // Adjusted to account for the NavBar's height
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  transform: ${(props) =>
+    props.isOpen ? "translateX(0)" : "translateX(-100%)"};
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const SidebarItem = styled.div`
+  padding: 10px 15px;
+  color: #ffffff; // Set text color
+  font-family: Arial, sans-serif;
+  font-size: 1.5rem; // Match font size of the logo
+  font-weight: bold; // Match font weight of the logo
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #1b3f7b; // Change as needed
+  }
+
+  // Add more styles as needed
+`;
+
 const MenuBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -56,7 +89,7 @@ const MenuBar: React.FC = () => {
       <NavBar>
         <Logo onClick={toggleMenu}>
           <FaBars />
-          <span>Logo</span>
+          <span>GORILLA LABS</span>
         </Logo>
         <Icons>
           <FaShoppingCart />
@@ -64,9 +97,10 @@ const MenuBar: React.FC = () => {
         </Icons>
       </NavBar>
       <Sidebar isOpen={isMenuOpen}>
-        <SidebarItem>Menu Item 1</SidebarItem>
-        <SidebarItem>Menu Item 2</SidebarItem>
-        <SidebarItem>Menu Item 3</SidebarItem>
+        <SidebarItem>Home</SidebarItem>
+        <SidebarItem>Explore</SidebarItem>
+        <SidebarItem>Cart</SidebarItem>
+        <SidebarItem>Contact</SidebarItem>
         {/* Add more menu items as needed */}
       </Sidebar>
     </>
