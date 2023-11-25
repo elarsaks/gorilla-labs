@@ -148,7 +148,7 @@ const ParticlesCanvas: React.FC = () => {
       }
 
       // Draw the image on top of the particles
-      drawImage(ctx);
+      // drawImage(ctx);
     };
 
     animate();
