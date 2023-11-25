@@ -1,11 +1,12 @@
-import MenuBar from "@/components/MenuBar";
-import ParticlesCanvas from "@/components/ParticlesCanvas";
+import React from "react";
 
-export default function () {
+const Home = () => {
   return (
     <div>
-      <ParticlesCanvas />
-      <MenuBar />
+      <h1>Home Page</h1>
+      {/* Content for Home Page */}
     </div>
   );
-}
+};
+
+export default Home;
