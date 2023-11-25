@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 const PageContainer = styled.div`
   display: flex;
@@ -22,9 +23,33 @@ const ContentContainer = styled.div`
 `;
 
 const StyledImage = styled.img`
-  max-width: 50%;
+  max-width: 70%;
   max-height: 50%;
   margin-bottom: 20px; // Adjust as needed
+`;
+
+const SocialLinks = styled.div`
+  margin-top: 0px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 2rem;
+  // Make corners rounded
+
+  border-radius: 50px;
+`;
+
+const SocialLink = styled.a`
+  color: #ffffff;
+
+  &:hover {
+    color: #f9a825;
+    // Scale slowly on hover
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    scale: 1.2;
+  }
 `;
 
 const Home = () => {
@@ -32,8 +57,22 @@ const Home = () => {
     <PageContainer>
       <StyledImage src="/assets/logo.png" alt="Logo" />
       <ContentContainer>
-        <h1>Home Page</h1>
-        {/* Additional content can go here */}
+        <SocialLinks>
+          <SocialLink
+            href="https://www.linkedin.com/in/elarsaks/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaLinkedin size="50" />
+          </SocialLink>
+          <SocialLink
+            href="https://github.com/elarsaks/gorilla-labs"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub size="50" />
+          </SocialLink>
+        </SocialLinks>
       </ContentContainer>
     </PageContainer>
   );
