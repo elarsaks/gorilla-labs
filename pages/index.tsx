@@ -1,4 +1,4 @@
-import MenuBar from "@/components/MenuBar";
+import MenuBar from "@/components/menu/MenuBar";
 import ParticlesCanvas from "@/components/ParticlesCanvas";
 
 export default function () {
