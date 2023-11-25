@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FaBars, FaShoppingCart, FaUser } from "react-icons/fa";
-
 import styled from "styled-components";
 
 export const NavBar = styled.nav`
@@ -48,7 +47,7 @@ export const Sidebar = styled.div<{ isOpen: boolean }>`
   top: 65px;
   left: 0;
   width: 250px;
-  height: calc(100% - 50px); // Adjusted to account for the NavBar's height
+  height: calc(100% - 50px);
   background: rgba(0, 0, 0, 0.4);
   z-index: 999;
   transform: ${(props) =>
@@ -64,17 +63,15 @@ export const SidebarItem = styled.div`
   padding: 10px 15px;
   color: #ffffff; // Set text color
   font-family: Arial, sans-serif;
-  font-size: 1.5rem; // Match font size of the logo
-  font-weight: bold; // Match font weight of the logo
+  font-size: 1.5rem;
+  font-weight: bold;
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #1b3f7b; // Change as needed
+    background-color: #1b3f7b;
   }
-
-  // Add more styles as needed
 `;
 
 const MenuBar: React.FC = () => {
