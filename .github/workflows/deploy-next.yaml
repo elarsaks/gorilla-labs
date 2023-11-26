@@ -42,7 +42,7 @@ jobs:
       # Package the application for deployment
       - name: Package application
         working-directory: ./client
-        run: zip -r deploy.zip build
+        run: zip -r ../deploy.zip build
 
       # Deploy to AWS Elastic Beanstalk
       - name: Deploy to EB
