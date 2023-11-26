@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # checkout the repository content to github runner
+      # checkout the repository content to github runner.
       - name: Checkout
         uses: actions/checkout@v2
 
