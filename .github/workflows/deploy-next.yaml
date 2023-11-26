@@ -42,8 +42,12 @@ jobs:
       # Package the Next.js application for deployment
       - name: Package application
         working-directory: ./client
+<<<<<<< HEAD
         run: |
           zip -r ../deploy.zip .next package.json next.config.js public
+=======
+        run: zip -r ../deploy.zip build
+>>>>>>> b50d99c380a71173da262496d64e39ef48a2d197
 
       # Deploy to AWS Elastic Beanstalk
       - name: Deploy to EB
