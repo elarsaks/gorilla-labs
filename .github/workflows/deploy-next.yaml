@@ -34,10 +34,10 @@ jobs:
         working-directory: ./client
         run: npm i
 
-      # build the react app
-      - name: Build
+      # Package the application for deployment
+      - name: Package application
         working-directory: ./client
-        run: npm run build
+        run: zip -r deploy.zip build
 
       # Deploy to AWS Elastic Beanstalk
       - name: Deploy to EB
