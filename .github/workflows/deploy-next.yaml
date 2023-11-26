@@ -39,13 +39,14 @@ jobs:
         working-directory: ./client
         run: npm run build
 
-      # - name: Deploy to AWS Elastic Beanstalk
-      #   uses: einaregilsson/beanstalk-deploy@v18
-      #   with:
-      #     aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     application_name: "your-application-name"
-      #     environment_name: "your-environment-name"
-      #     region: "us-west-2" # Set your AWS region
-      #     version_label: ${{ github.sha }}
-      #     deployment_package: path/to/your/deployment/zip # Set the path to your deployment package
+      # Deploy to AWS Elastic Beanstalk
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: gorilla-labs
+          environment_name: Gorilla-labs-env
+          version_label: ${{ github.sha }}
+          region: eu-north-1
+          deployment_package: deploy.zip
