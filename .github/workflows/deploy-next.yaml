@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-       # checkout the repository content to github runner
+      # checkout the repository content to github runner
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -24,7 +24,7 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: ./client/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -32,17 +32,18 @@ jobs:
       # install dependencies
       - name: Install dependencies
         working-directory: ./client
-        run: npm i
+        run: npm install
 
-      # build the react app
+      # build the next app
       - name: Build
         working-directory: ./client
         run: npm run build
 
-      # Package the application for deployment
+      # Package the Next.js application for deployment
       - name: Package application
         working-directory: ./client
-        run: zip -r deploy.zip build
+        run: |
+          zip -r ../deploy.zip .next package.json next.config.js public
 
       # Deploy to AWS Elastic Beanstalk
       - name: Deploy to EB
