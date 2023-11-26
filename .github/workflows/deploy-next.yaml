@@ -34,6 +34,11 @@ jobs:
         working-directory: ./client
         run: npm i
 
+      # build the react app
+      - name: Build
+        working-directory: ./client
+        run: npm run build
+
       # Package the application for deployment
       - name: Package application
         working-directory: ./client
