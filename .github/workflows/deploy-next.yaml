@@ -45,6 +45,23 @@ jobs:
         run: |
           zip -r ../deploy.zip .next package.json next.config.js public
 
+      # Verify AWS credentials are accessible
+      - name: Verify AWS credentials
+        run: |
+          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
+            echo "AWS_ACCESS_KEY_ID is not set."
+            exit 1
+          else
+            echo "AWS_ACCESS_KEY_ID is set."
+          fi
+
+          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
+            echo "AWS_SECRET_ACCESS_KEY is not set."
+            exit 1
+          else
+            echo "AWS_SECRET_ACCESS_KEY is set."
+          fi
+
       # Deploy to AWS Elastic Beanstalk
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
