@@ -1,0 +1,36 @@
+name: Deploy Next to Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - deploy-next
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "18.17.1"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to AWS Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: "your-application-name"
+          environment_name: "your-environment-name"
+          region: "us-west-2" # Set your AWS region
+          version_label: ${{ github.sha }}
+          deployment_package: path/to/your/deployment/zip # Set the path to your deployment package

@@ -16,7 +16,6 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <title>Your Site Title</title>
           <link rel="icon" href="/favicon/favicon.ico" />
           {/* Here you can add global scripts, stylesheets, meta tags, etc. */}
         </Head>
