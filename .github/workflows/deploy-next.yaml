@@ -1,75 +1,75 @@
-# name: Deploy Next to Elastic Beanstalk
+name: Deploy Next to Elastic Beanstalk
 
-# on:
-#   push:
-#     branches:
-#       - deploy-next
+on:
+  push:
+    branches:
+      - deploy-next-to-eb
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       # checkout the repository content to github runner.
-#       - name: Checkout
-#         uses: actions/checkout@v2
+    steps:
+      # checkout the repository content to github runner.
+      - name: Checkout
+        uses: actions/checkout@v2
 
-#       # setup nodejs environment
-#       - name: Setup Node.js environment
-#         uses: actions/setup-node@v2.1.5
-#         with:
-#           node-version: "18.16.1"
+      # setup nodejs environment
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: "18.16.1"
 
-#       # cache the dependencies to speed up the build
-#       - name: Cache dependencies
-#         uses: actions/cache@v2
-#         with:
-#           path: ./client/node_modules
-#           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-#           restore-keys: |
-#             ${{ runner.os }}-node-
+      # cache the dependencies to speed up the build
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./client/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-#       # install dependencies
-#       - name: Install dependencies
-#         working-directory: ./client
-#         run: npm install
+      # install dependencies
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm install
 
-#       # build the next app
-#       - name: Build
-#         working-directory: ./client
-#         run: npm run build
+      # build the next app
+      - name: Build
+        working-directory: ./client
+        run: npm run build
 
-#       # Package the Next.js application for deployment
-#       - name: Package application
-#         working-directory: ./client
-#         run: |
-#           zip -r ../deploy.zip .next package.json next.config.js public
+      # Package the Next.js application for deployment
+      - name: Package application
+        working-directory: ./client
+        run: |
+          zip -r ../deploy.zip .next package.json next.config.js public
 
-#       # Verify AWS credentials are accessible
-#       - name: Verify AWS credentials
-#         run: |
-#           if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
-#             echo "AWS_ACCESS_KEY_ID is not set."
-#             exit 1
-#           else
-#             echo "AWS_ACCESS_KEY_ID is set."
-#           fi
+      # Verify AWS credentials are accessible
+      - name: Verify AWS credentials
+        run: |
+          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
+            echo "AWS_ACCESS_KEY_ID is not set."
+            exit 1
+          else
+            echo "AWS_ACCESS_KEY_ID is set."
+          fi
 
-#           if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
-#             echo "AWS_SECRET_ACCESS_KEY is not set."
-#             exit 1
-#           else
-#             echo "AWS_SECRET_ACCESS_KEY is set."
-#           fi
+          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
+            echo "AWS_SECRET_ACCESS_KEY is not set."
+            exit 1
+          else
+            echo "AWS_SECRET_ACCESS_KEY is set."
+          fi
 
-#       # Deploy to AWS Elastic Beanstalk
-#       - name: Deploy to EB
-#         uses: einaregilsson/beanstalk-deploy@v21
-#         with:
-#           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           application_name: gorilla-labs
-#           environment_name: Gorilla-labs-env
-#           version_label: ${{ github.sha }}
-#           region: eu-north-1
-#           deployment_package: deploy.zip
+      # Deploy to AWS Elastic Beanstalk
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: gorilla-labs
+          environment_name: Gorilla-labs-env
+          version_label: ${{ github.sha }}
+          region: eu-north-1
+          deployment_package: deploy.zip
