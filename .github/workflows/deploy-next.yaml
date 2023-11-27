@@ -10,27 +10,67 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      # checkout the repository content to github runner.
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
+      # setup nodejs environment
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
         with:
-          node-version: "18.17.1"
+          node-version: "18.16.1"
 
-      - name: Install Dependencies
+      # cache the dependencies to speed up the build
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./client/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # install dependencies
+      - name: Install dependencies
+        working-directory: ./client
         run: npm install
 
+      # build the next app
       - name: Build
+        working-directory: ./client
         run: npm run build
 
-      - name: Deploy to AWS Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v18
+      # Package the Next.js application for deployment
+      - name: Package application
+        working-directory: ./client
+        run: |
+          zip -r ../deploy.zip .next package.json next.config.js public
+
+      # Verify AWS credentials are accessible
+      - name: Verify AWS credentials
+        run: |
+          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
+            echo "AWS_ACCESS_KEY_ID is not set."
+            exit 1
+          else
+            echo "AWS_ACCESS_KEY_ID is set."
+          fi
+
+          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
+            echo "AWS_SECRET_ACCESS_KEY is not set."
+            exit 1
+          else
+            echo "AWS_SECRET_ACCESS_KEY is set."
+          fi
+
+      # Deploy to AWS Elastic Beanstalk
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: "your-application-name"
-          environment_name: "your-environment-name"
-          region: "us-west-2" # Set your AWS region
+          application_name: gorilla-labs-2
+          environment_name: Gorilla-labs-2-env
           version_label: ${{ github.sha }}
-          deployment_package: path/to/your/deployment/zip # Set the path to your deployment package
+          region: eu-north-1
+          deployment_package: deploy.zip
+          wait_for_deployment: true
