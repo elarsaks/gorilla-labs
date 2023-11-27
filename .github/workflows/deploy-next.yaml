@@ -3,7 +3,7 @@ name: Deploy Next to Elastic Beanstalk
 on:
   push:
     branches:
-      - deploy-next-to-eb
+      - deploy-next
 
 jobs:
   deploy:
