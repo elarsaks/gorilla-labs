@@ -65,8 +65,6 @@ const Home = () => {
             <FaGithub size="50" />
           </SocialLink>
         </SocialLinks>
-
-        <h2>🚧 𝗨𝗡𝗗𝗘𝗥 𝗗𝗘𝗩𝗘𝗟𝗢𝗣𝗠𝗘𝗡𝗧 🚧</h2>
       </ContentContainer>
     </PageContainer>
   );
