@@ -3,7 +3,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 const User = () => {
   const { data: session, status } = useSession();
 
-  console.log(session);
+  // console.log(session);
 
   const handleSignIn = () => {
     signIn("facebook"); // You specify 'facebook' if it's the only provider, or you can omit it to use the default sign-in route
