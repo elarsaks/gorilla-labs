@@ -79,6 +79,7 @@ export const SidebarItem = styled.div`
 const MenuBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // State to manage authentication
 
   useEffect(() => {
     // As soon as the component mounts, we acknowledge it's on the client
@@ -103,9 +104,21 @@ const MenuBar: React.FC = () => {
         </Logo>
         <Icons>
           <FaShoppingCart />
-          <FaUser />
+
+          {isAuthenticated ? (
+            <FaUser /> // Show user icon when authenticated
+          ) : (
+            <Link
+              href="/login"
+              passHref
+              style={{ textDecoration: "none", color: "#ffffff" }}
+            >
+              Login
+            </Link>
+          )}
         </Icons>
       </NavBar>
+
       <Sidebar $isOpen={isMenuOpen}>
         <Link href="/" passHref style={{ textDecoration: "none" }}>
           <SidebarItem>Home</SidebarItem>
