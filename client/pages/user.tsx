@@ -21,9 +21,17 @@ const User = () => {
     <div>
       {session ? (
         <div>
-          <p>Welcome, {session.user.name}!</p>
-          {session.user.image && (
-            <img src={session.user.image} alt={session.user.name} />
+          {/* Check if session.user is defined */}
+          {session.user && (
+            <>
+              <p>Welcome, {session.user.name}!</p>
+              {session.user.image && (
+                <img
+                  src={session.user.image}
+                  alt={session.user.name || "User"}
+                />
+              )}
+            </>
           )}
           <button onClick={handleSignOut}>Sign out</button>
         </div>
