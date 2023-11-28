@@ -2,6 +2,7 @@ import { FaBars, FaShoppingCart, FaUser } from "react-icons/fa";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export const NavBar = styled.nav`
   background: rgba(0, 0, 0, 0.3);
@@ -79,7 +80,8 @@ export const SidebarItem = styled.div`
 const MenuBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // State to manage authentication
+  const { data: session, status } = useSession();
+  const isAuthenticated = status === "authenticated";
 
   useEffect(() => {
     // As soon as the component mounts, we acknowledge it's on the client
@@ -106,15 +108,13 @@ const MenuBar: React.FC = () => {
           <FaShoppingCart />
 
           {isAuthenticated ? (
-            <FaUser /> // Show user icon when authenticated
+            <div onClick={() => signOut()}>
+              <FaUser /> {/* User icon for authenticated users */}
+            </div>
           ) : (
-            <Link
-              href="/login"
-              passHref
-              style={{ textDecoration: "none", color: "#ffffff" }}
-            >
-              Login
-            </Link>
+            <div onClick={() => signIn()}>
+              Login {/* Login text for unauthenticated users */}
+            </div>
           )}
         </Icons>
       </NavBar>
