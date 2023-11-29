@@ -63,7 +63,8 @@ const ParticlesCanvas: React.FC = () => {
     // Handle window resize
     const handleResize = () => {
       canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // Increase height to make sure canvas covers entire screen on mobile during scroll
+      canvas.height = window.innerHeight * 1.2;
     };
     window.addEventListener("resize", handleResize);
 
