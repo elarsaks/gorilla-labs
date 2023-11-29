@@ -3,6 +3,11 @@ import styled from "styled-components";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 const PageContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,8 +20,9 @@ const ContentContainer = styled.div`
 `;
 
 const StyledImage = styled.img`
-  max-width: 70%;
+  max-width: 50%;
   max-height: 50%;
+  max-width: 700px;
   margin-bottom: 20px; // Adjust as needed
 `;
 
