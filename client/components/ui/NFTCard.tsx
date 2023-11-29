@@ -13,7 +13,7 @@ const Card = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #0d0d0d;
+  background-color: rgba(0, 0, 0, 0.9);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
@@ -30,7 +30,7 @@ const Info = styled.div`
 const Name = styled.h2`
   margin: 0;
   font-size: 1.5em;
-  color: #333;
+  color: #ffffff;
 `;
 
 const Description = styled.p`
@@ -63,7 +63,7 @@ const NFTCard: React.FC<NFTCardProps> = ({
       <Image src={image} alt={name} />
       <Info>
         <Name>{name}</Name>
-        <Description>{description} </Description>
+        <Description>{description}</Description>
         <Network>{network}</Network>
         <Price>{price}</Price>
       </Info>

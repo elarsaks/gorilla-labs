@@ -15,13 +15,18 @@ const images = [
 
 // Create a styled grid container using styled-components
 const GridContainer = styled.div`
+  margin-top: 10vh;
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(250px, 1fr)
-  ); // Adjust the minmax values as needed
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem; // Space between cards
   padding: 1rem;
+  overflow: auto;
+  max-height: 100vh;
+
+  // Hide scrollbar for Webkit browsers
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Home = () => {
@@ -29,12 +34,12 @@ const Home = () => {
     <div>
       <h1>Marketplace</h1>
       <GridContainer>
-        {[...images, ...images, ...images].map((image, index) => (
+        {[...images, ...images, ...images, ...images].map((image, index) => (
           <NFTCard
             key={index}
             image={`/assets/nft-images/${image}`}
-            name="NFT Name"
-            description="This is a description of the NFT."
+            name={image.split(".")[0]}
+            description={`This is a description of the ${image} NFT.`}
             network="Ethereum"
             price="0.05 ETH"
           />
