@@ -18,7 +18,7 @@ const GridContainer = styled.div`
   margin-top: 10vh;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem; // Space between cards
+  gap: 1.5rem; // Space between cards
   padding: 1rem;
   overflow: auto;
   max-height: 100vh;
@@ -30,6 +30,10 @@ const GridContainer = styled.div`
 `;
 
 const Home = () => {
+  function capitalize(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   return (
     <div>
       <h1>Marketplace</h1>
@@ -38,7 +42,7 @@ const Home = () => {
           <NFTCard
             key={index}
             image={`/assets/nft-images/${image}`}
-            name={image.split(".")[0]}
+            name={capitalize(image.split(".")[0])}
             description={`This is a description of the ${image} NFT.`}
             network="Ethereum"
             price="0.05 ETH"
