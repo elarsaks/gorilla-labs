@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 export const NavBar = styled.nav`
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.9);
   color: white;
   display: flex;
   justify-content: space-between;
