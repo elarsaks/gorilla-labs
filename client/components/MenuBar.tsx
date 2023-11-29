@@ -1,8 +1,8 @@
 import { FaBars, FaShoppingCart, FaUser } from "react-icons/fa";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSession, signIn, signOut } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useSession, signIn, signOut } from "next-auth/react";
 
 export const NavBar = styled.nav`
   background: rgba(0, 0, 0, 0.3);
@@ -44,64 +44,30 @@ export const Icons = styled.div`
   }
 `;
 
-export const Sidebar = styled.div<{ $isOpen: boolean }>`
-  position: fixed;
-  top: 65px;
-  left: 0;
-  width: 250px;
-  height: calc(100% - 50px);
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 999;
-  transform: ${({ $isOpen }) =>
-    $isOpen ? "translateX(0)" : "translateX(-100%)"};
-  transition: transform 0.3s ease-in-out;
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const SidebarItem = styled.div`
-  padding: 10px 15px;
-  color: #ffffff; // Set text color
-  font-family: Arial, sans-serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-
-  text-decoration: none;
-  &:hover {
-    background-color: #1b3f7b;
-  }
-`;
-
 const MenuBar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const { data: session, status } = useSession();
   const isAuthenticated = status === "authenticated";
+  const router = useRouter();
 
   useEffect(() => {
     // As soon as the component mounts, we acknowledge it's on the client
     setIsClient(true);
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   // Render nothing if it's not on the client
   if (!isClient) {
     return null;
   }
 
+  const handleLogoClick = () => {
+    router.push("/"); // Navigate to root
+  };
+
   return (
     <>
       <NavBar>
-        <Logo onClick={toggleMenu}>
-          <FaBars />
+        <Logo onClick={handleLogoClick}>
           <span>GORILLA LABS</span>
         </Logo>
         <Icons>
@@ -118,25 +84,6 @@ const MenuBar: React.FC = () => {
           )}
         </Icons>
       </NavBar>
-
-      <Sidebar $isOpen={isMenuOpen}>
-        <Link href="/" passHref style={{ textDecoration: "none" }}>
-          <SidebarItem>Home</SidebarItem>
-        </Link>
-
-        <Link href="/explore" passHref style={{ textDecoration: "none" }}>
-          <SidebarItem>Explore</SidebarItem>
-        </Link>
-        <Link href="/cart" passHref style={{ textDecoration: "none" }}>
-          <SidebarItem>Cart</SidebarItem>
-        </Link>
-        <Link href="/contact" passHref style={{ textDecoration: "none" }}>
-          <SidebarItem>Contact</SidebarItem>
-        </Link>
-        <Link href="/profile" passHref style={{ textDecoration: "none" }}>
-          <SidebarItem>Profile</SidebarItem>
-        </Link>
-      </Sidebar>
     </>
   );
 };
