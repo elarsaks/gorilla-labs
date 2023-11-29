@@ -60,13 +60,6 @@ const ParticlesCanvas: React.FC = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Create and load the image
-    imageRef.current = new Image();
-    imageRef.current.src = "/assets/logo.png";
-    imageRef.current.onload = () => {
-      drawImage(ctx);
-    };
-
     // Handle window resize
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -81,33 +74,6 @@ const ParticlesCanvas: React.FC = () => {
       const speedY = (Math.random() - 0.5) * 1.2;
       const size = Math.random() * 2 + 1;
       particles.push(new Particle({ size, speedX, speedY, x, y }));
-    }
-
-    function drawImage(ctx: CanvasRenderingContext2D) {
-      const canvas = canvasRef.current;
-      if (!canvas || !imageRef.current) return;
-
-      const img = imageRef.current;
-      const maxWidth = canvas.width * 0.5; // 50% of canvas width
-      const maxHeight = canvas.height * 0.5; // 50% of canvas height
-      const imgRatio = img.width / img.height;
-      let imgWidth = img.width;
-      let imgHeight = img.height;
-
-      // Scale image to fit within maxWidth and maxHeight, maintaining aspect ratio
-      if (imgWidth > maxWidth) {
-        imgWidth = maxWidth;
-        imgHeight = imgWidth / imgRatio;
-      }
-      if (imgHeight > maxHeight) {
-        imgHeight = maxHeight;
-        imgWidth = imgHeight * imgRatio;
-      }
-
-      const x = (canvas.width - imgWidth) / 2; // Center horizontally
-      const y = (canvas.height - imgHeight) / 2; // Center vertically
-
-      ctx.drawImage(img, x, y, imgWidth, imgHeight);
     }
 
     const animate = () => {
@@ -146,9 +112,6 @@ const ParticlesCanvas: React.FC = () => {
           }
         }
       }
-
-      // Draw the image on top of the particles
-      // drawImage(ctx);
     };
 
     animate();
