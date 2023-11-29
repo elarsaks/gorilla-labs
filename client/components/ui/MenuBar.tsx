@@ -20,15 +20,34 @@ export const NavBar = styled.nav`
   font-family: Arial, sans-serif;
 `;
 
+export const LogoAndButtons = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const Logo = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-size: 1.5rem;
 
-  span {
-    margin-left: 0.5rem;
-    font-weight: bold;
+  img {
+    height: 40px; // You can adjust this value as needed
+  }
+`;
+
+export const Button = styled.button`
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
@@ -51,28 +70,38 @@ const MenuBar: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // As soon as the component mounts, we acknowledge it's on the client
     setIsClient(true);
   }, []);
 
-  // Render nothing if it's not on the client
   if (!isClient) {
     return null;
   }
 
   const handleLogoClick = () => {
-    router.push("/"); // Navigate to root
+    router.push("/");
+  };
+
+  const navigateToMarketplace = () => {
+    router.push("/marketplace"); // Update this with your actual marketplace route
+  };
+
+  const navigateToCreate = () => {
+    router.push("/create"); // Update this with your actual create route
   };
 
   return (
     <>
       <NavBar>
-        <Logo onClick={handleLogoClick}>
-          <span>GORILLA LABS</span>
-        </Logo>
+        <LogoAndButtons>
+          <Logo onClick={handleLogoClick}>
+            <img src="/assets/logo.png" alt="Gorilla Labs Logo" />
+          </Logo>
+          <Button onClick={navigateToMarketplace}>Marketplace</Button>
+          <Button onClick={navigateToCreate}>Create</Button>
+        </LogoAndButtons>
+
         <Icons>
           <FaShoppingCart />
-
           {isAuthenticated ? (
             <div onClick={() => signOut()}>
               <FaUser /> {/* User icon for authenticated users */}
