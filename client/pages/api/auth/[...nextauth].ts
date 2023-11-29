@@ -19,10 +19,10 @@ const authOptions: NextAuthOptions = {
       // Always redirect to '/user' after signing in
       return `${baseUrl}/user`;
     },
-    async signOut({ token, url, baseUrl }) {
-      // Implement logic to redirect the user after signing out
-      return baseUrl; // or your custom url
-    },
+    // async signOut({ token, url, baseUrl }) {
+    //   // Implement logic to redirect the user after signing out
+    //   return baseUrl; // or your custom url
+    // },
     // You can add other callbacks here as needed
   },
   // Add any other NextAuth options here
