@@ -48,6 +48,7 @@ const Home = () => {
   return (
     <PageContainer>
       <StyledImage src="/assets/logo.png" alt="Logo" />
+
       <ContentContainer>
         <SocialLinks>
           <SocialLink

@@ -1,5 +1,5 @@
-import MenuBar from "@/components/MenuBar";
-import ParticlesCanvas from "@/components/ParticlesCanvas";
+import MenuBar from "@/components/ui/MenuBar";
+import ParticlesCanvas from "@/components/ui/ParticlesCanvas";
 import styled from "styled-components";
 
 const PageContainer = styled.div`
