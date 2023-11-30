@@ -1,8 +1,8 @@
-import { FaBars, FaStore, FaUser, FaPlus } from "react-icons/fa";
+import { FaStore, FaUser, FaPlus } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export const NavBar = styled.nav`
   background: rgba(0, 0, 0, 0.9);
@@ -81,8 +81,6 @@ export const Icons = styled.div`
 
 const MenuBar: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
-  const { data: session, status } = useSession();
-  const isAuthenticated = status === "authenticated";
   const router = useRouter();
 
   useEffect(() => {
@@ -125,15 +123,7 @@ const MenuBar: React.FC = () => {
         </LogoAndButtons>
 
         <Icons>
-          {isAuthenticated ? (
-            <div onClick={() => signOut()}>
-              <FaUser /> {/* User icon for authenticated users */}
-            </div>
-          ) : (
-            <div onClick={() => signIn()}>
-              Login {/* Login text for unauthenticated users */}
-            </div>
-          )}
+          <ConnectButton />
         </Icons>
       </NavBar>
     </>
