@@ -1,11 +1,11 @@
-import { FaBars, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaStore, FaUser, FaPlus } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export const NavBar = styled.nav`
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.9);
   color: white;
   display: flex;
   justify-content: space-between;
@@ -45,9 +45,25 @@ export const Button = styled.button`
   font-family: Arial, sans-serif;
   text-transform: uppercase;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 0.5rem;
+  }
 
   &:hover {
-    text-decoration: underline;
+    color: aqua;
+
+    svg {
+      color: aqua;
+    }
+  }
+
+  @media (max-width: 768px) {
+    span {
+      display: none;
+    }
   }
 `;
 
@@ -65,8 +81,6 @@ export const Icons = styled.div`
 
 const MenuBar: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
-  const { data: session, status } = useSession();
-  const isAuthenticated = status === "authenticated";
   const router = useRouter();
 
   useEffect(() => {
@@ -96,21 +110,20 @@ const MenuBar: React.FC = () => {
           <Logo onClick={handleLogoClick}>
             <img src="/assets/logo.png" alt="Gorilla Labs Logo" />
           </Logo>
-          <Button onClick={navigateToMarketplace}>Marketplace</Button>
-          <Button onClick={navigateToCreate}>Create</Button>
+
+          <Button onClick={navigateToMarketplace}>
+            <FaStore />
+            <span> Marketplace</span>
+          </Button>
+
+          <Button onClick={navigateToCreate}>
+            <FaPlus />
+            <span> Create</span>
+          </Button>
         </LogoAndButtons>
 
         <Icons>
-          <FaShoppingCart />
-          {isAuthenticated ? (
-            <div onClick={() => signOut()}>
-              <FaUser /> {/* User icon for authenticated users */}
-            </div>
-          ) : (
-            <div onClick={() => signIn()}>
-              Login {/* Login text for unauthenticated users */}
-            </div>
-          )}
+          <ConnectButton />
         </Icons>
       </NavBar>
     </>

@@ -6,15 +6,20 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
+  align - items: center;
   position: absolute;
   top: 0;
   left: 0;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: auto;
+
+  // Hide scrollbar for Webkit browsers
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default function Layout({
@@ -26,9 +31,11 @@ export default function Layout({
     <>
       <ParticlesCanvas />
       <MenuBar />
-      <PageContainer>
+      <main>{children}</main>
+
+      {/* <PageContainer>
         <main>{children}</main>
-      </PageContainer>
+      </PageContainer> */}
     </>
   );
 }
