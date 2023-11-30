@@ -64,7 +64,9 @@ const CustomConnectButton: React.FC = () => {
               <>
                 <StyledButton onClick={openChainModal} type="button">
                   {chain.hasIcon && (
-                    <ChainIcon background={chain.iconBackground}>
+                    <ChainIcon
+                      background={chain.iconBackground || "defaultBackground"}
+                    >
                       {chain.iconUrl && (
                         <ChainImage
                           alt={chain.name ?? "Chain icon"}
