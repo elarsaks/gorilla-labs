@@ -20,12 +20,15 @@ const ContentContainer = styled.div`
 `;
 
 const StyledImage = styled.img`
-  max-width: 50%;
-  max-height: 50%;
   max-width: 700px;
-  margin-bottom: 20px; // Adjust as needed
-`;
+  max-height: auto;
+  margin-bottom: 20px;
 
+  @media (max-width: 768px) {
+    max-width: 70%;
+    max-height: 50%;
+  }
+`;
 const SocialLinks = styled.div`
   margin-top: 0px;
   display: flex;
