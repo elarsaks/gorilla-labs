@@ -1,17 +1,19 @@
 # Gorilla Labs - NFT Marketplace
 
-<iframe src="https://gorilla-labs-sandbox.org" width="600" height="400">
-  <p>Your browser does not support iframes.</p>
-</iframe>
+[Live Example ](https://elarsaks.github.io/Go-blockchain/)
+
+![Alt text](https://github.com/elarsaks/gorilla-labs/blob/main/client/public/assets/logo.png)
+
 
 
 ## About  
 **The purpose of this project:**
 
 
-![Topology Diagram](...)
 
 # Installation and running
+
+
 
 **Installation:**  
 
