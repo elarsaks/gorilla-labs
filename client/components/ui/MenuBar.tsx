@@ -2,7 +2,6 @@ import { FaStore, FaUser, FaPlus } from "react-icons/fa";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import CustomConnectButton from "./CustomConnectButton";
 
 export const NavBar = styled.nav`
