@@ -31,11 +31,10 @@ export default function Layout({
     <>
       <ParticlesCanvas />
       <MenuBar />
-      <main>{children}</main>
 
-      {/* <PageContainer>
+      <PageContainer>
         <main>{children}</main>
-      </PageContainer> */}
+      </PageContainer>
     </>
   );
 }
