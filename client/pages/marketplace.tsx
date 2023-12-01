@@ -52,7 +52,7 @@ const MarketPlace = () => {
     <PageContainer>
       <GridContainer>
         <StyledHeader>Marketplace</StyledHeader>
-        {[...images].map((image, index) => (
+        {[...images, ...images, ...images, ...images].map((image, index) => (
           <NFTCard
             key={index}
             image={`/assets/nft-images/${image}`}

@@ -15,12 +15,9 @@ const StyledButton = styled.button`
   padding: 8px 12px;
   color: white;
 
-  // Media query for tablets and smaller devices
   @media (max-width: 768px) {
     justify-content: center;
     gap: 8px;
-
-    // Hide text on smaller screens
     span {
       display: none;
     }
@@ -41,12 +38,36 @@ const ChainImage = styled.img`
   height: 12px;
 `;
 
-const WalletContainer = styled.div<{ isReady: boolean }>`
-  opacity: ${(props) => (props.isReady ? 1 : 0)};
-  pointer-events: ${(props) => (props.isReady ? "auto" : "none")};
-  user-select: ${(props) => (props.isReady ? "auto" : "none")};
-  display: flex;
-  gap: 12px;
+type ComponentProps = {
+  children?: React.ReactNode;
+  [key: string]: any;
+};
+
+// Define the type for the component itself
+type ComponentType = React.ComponentType<ComponentProps>;
+
+// Higher-order function to filter out non-DOM props
+const withFilteredProps = (Component: ComponentType) => {
+  return ({ isReady, ...props }: { isReady: boolean; [key: string]: any }) => (
+    <Component
+      {...props}
+      style={{
+        opacity: isReady ? 1 : 0,
+        pointerEvents: isReady ? "auto" : "none",
+        userSelect: isReady ? "auto" : "none",
+        display: "flex",
+        gap: "12px",
+        ...props.style,
+      }}
+    />
+  );
+};
+
+// Use the higher-order function with a React component
+const FilteredDiv = withFilteredProps(styled.div``);
+
+const WalletContainer = styled(FilteredDiv)`
+  // Additional styles for WalletContainer, if any
 `;
 
 const CustomConnectButton: React.FC = () => {
