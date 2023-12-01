@@ -15,6 +15,7 @@ const PageContainer = styled.div`
   margin: 0;
   padding: 0;
   overflow: auto;
+  font-family: Arial, sans-serif;
 
   // Hide scrollbar for Webkit browsers
   &::-webkit-scrollbar {

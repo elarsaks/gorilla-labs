@@ -35,6 +35,7 @@ export const Logo = styled.div`
   }
 `;
 
+// TODO: Shared button
 export const Button = styled.button`
   background: transparent;
   border: none;
