@@ -5,14 +5,18 @@
 </h3>
 
 
-## About  
-**The purpose of this project:**
+# About
 
+***What it is:***  
+This is an NFT marketplace developed using Next.js and TypeScript.  
+I am building it whithout planning, just exploring like doodling.  
+More to come...  
+
+***The purpose of this project:***  
+The goal is to gain experience with Next JS. 
 
 
 # Installation and running
-
-
 
 **Installation:**  
 
