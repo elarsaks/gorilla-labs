@@ -5,7 +5,7 @@ import styled from "styled-components";
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   width: 100vw;
   height: 100vh;
   align - items: center;
@@ -31,10 +31,9 @@ export default function Layout({
     <>
       <ParticlesCanvas />
       <MenuBar />
-
-      <PageContainer>
-        <main>{children}</main>
-      </PageContainer>
+      <main>
+        <PageContainer>{children}</PageContainer>
+      </main>
     </>
   );
 }
