@@ -1,12 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { FaWallet } from "react-icons/fa"; // Importing FaWallet as the wallet icon
 
 // Define styled components
 const StyledButton = styled.button`
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-right: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: white;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 8px;
+    span {
+      display: none;
+    }
+  }
 `;
 
 const ChainIcon = styled.div<{ background: string }>`
@@ -23,13 +38,24 @@ const ChainImage = styled.img`
   height: 12px;
 `;
 
-const WalletContainer = styled.div<{ isReady: boolean }>`
-  opacity: ${(props) => (props.isReady ? 1 : 0)};
-  pointer-events: ${(props) => (props.isReady ? "auto" : "none")};
-  user-select: ${(props) => (props.isReady ? "auto" : "none")};
-  display: flex;
-  gap: 12px;
-`;
+// Higher-order function to filter out non-DOM props
+const withFilteredProps = (Component) => {
+  return ({ isReady, ...props }) => (
+    <Component
+      {...props}
+      style={{
+        opacity: isReady ? 1 : 0,
+        pointerEvents: isReady ? "auto" : "none",
+        userSelect: isReady ? "auto" : "none",
+        display: "flex",
+        gap: "12px",
+        ...props.style,
+      }}
+    />
+  );
+};
+
+const WalletContainer = styled(withFilteredProps("div"))``;
 
 const CustomConnectButton: React.FC = () => {
   return (
@@ -64,7 +90,9 @@ const CustomConnectButton: React.FC = () => {
               <>
                 <StyledButton onClick={openChainModal} type="button">
                   {chain.hasIcon && (
-                    <ChainIcon background={chain.iconBackground}>
+                    <ChainIcon
+                      background={chain.iconBackground || "defaultBackground"}
+                    >
                       {chain.iconUrl && (
                         <ChainImage
                           alt={chain.name ?? "Chain icon"}
@@ -73,10 +101,12 @@ const CustomConnectButton: React.FC = () => {
                       )}
                     </ChainIcon>
                   )}
-                  {chain.name}
+                  <span>{chain.name}</span>
                 </StyledButton>
+
                 <StyledButton onClick={openAccountModal} type="button">
-                  {account.displayName}
+                  <FaWallet /> {/* Using FaWallet as the wallet icon */}
+                  <span>{account.displayName}</span>
                   {account.displayBalance ? ` (${account.displayBalance})` : ""}
                 </StyledButton>
               </>
