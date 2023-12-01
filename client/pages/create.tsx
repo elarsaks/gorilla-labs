@@ -11,7 +11,7 @@ export const Form = styled.form`
   padding: 20px;
   padding-top: 0px;
   border-radius: 8px;
-  border: 1px solid aqua;
+  border: 1px solid white;
   background-color: rgba(0, 0, 0, 0.7);
 `;
 
@@ -19,7 +19,7 @@ export const Input = styled.input`
   padding: 12px;
   border: 2px solid #ccc;
   border-radius: 8px;
-  border: 1px solid aqua;
+  border: 1px solid white;
   font-size: 16px;
 
   &:focus {
@@ -36,7 +36,7 @@ export const TextArea = styled.textarea`
   padding: 12px;
   border: 2px solid #ccc;
   border-radius: 8px;
-  border: 1px solid aqua;
+  border: 1px solid white;
   font-size: 16px;
   min-height: 100px;
   resize: vertical;

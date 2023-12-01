@@ -38,9 +38,17 @@ const ChainImage = styled.img`
   height: 12px;
 `;
 
+type ComponentProps = {
+  children?: React.ReactNode;
+  [key: string]: any;
+};
+
+// Define the type for the component itself
+type ComponentType = React.ComponentType<ComponentProps>;
+
 // Higher-order function to filter out non-DOM props
-const withFilteredProps = (Component) => {
-  return ({ isReady, ...props }) => (
+const withFilteredProps = (Component: ComponentType) => {
+  return ({ isReady, ...props }: { isReady: boolean; [key: string]: any }) => (
     <Component
       {...props}
       style={{
@@ -55,7 +63,12 @@ const withFilteredProps = (Component) => {
   );
 };
 
-const WalletContainer = styled(withFilteredProps("div"))``;
+// Use the higher-order function with a React component
+const FilteredDiv = withFilteredProps(styled.div``);
+
+const WalletContainer = styled(FilteredDiv)`
+  // Additional styles for WalletContainer, if any
+`;
 
 const CustomConnectButton: React.FC = () => {
   return (
