@@ -15,12 +15,9 @@ const StyledButton = styled.button`
   padding: 8px 12px;
   color: white;
 
-  // Media query for tablets and smaller devices
   @media (max-width: 768px) {
     justify-content: center;
     gap: 8px;
-
-    // Hide text on smaller screens
     span {
       display: none;
     }
@@ -41,13 +38,24 @@ const ChainImage = styled.img`
   height: 12px;
 `;
 
-const WalletContainer = styled.div<{ isReady: boolean }>`
-  opacity: ${(props) => (props.isReady ? 1 : 0)};
-  pointer-events: ${(props) => (props.isReady ? "auto" : "none")};
-  user-select: ${(props) => (props.isReady ? "auto" : "none")};
-  display: flex;
-  gap: 12px;
-`;
+// Higher-order function to filter out non-DOM props
+const withFilteredProps = (Component) => {
+  return ({ isReady, ...props }) => (
+    <Component
+      {...props}
+      style={{
+        opacity: isReady ? 1 : 0,
+        pointerEvents: isReady ? "auto" : "none",
+        userSelect: isReady ? "auto" : "none",
+        display: "flex",
+        gap: "12px",
+        ...props.style,
+      }}
+    />
+  );
+};
+
+const WalletContainer = styled(withFilteredProps("div"))``;
 
 const CustomConnectButton: React.FC = () => {
   return (
