@@ -1,8 +1,8 @@
 # Gorilla Labs - NFT Marketplace
 
-[Live Example ](https://elarsaks.github.io/Go-blockchain/)
+[Live Example ](https://gorilla-labs-sandbox.org/)
 
-![Alt text](https://github.com/elarsaks/gorilla-labs/blob/main/client/public/assets/logo.png)
+[![Live Example](https://github.com/elarsaks/gorilla-labs/blob/main/client/public/assets/logo.png)](https://gorilla-labs-sandbox.org/)
 
 
 
