@@ -1,12 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { FaWallet } from "react-icons/fa"; // Importing FaWallet as the wallet icon
 
 // Define styled components
 const StyledButton = styled.button`
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-right: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: white;
+
+  // Media query for tablets and smaller devices
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 8px;
+
+    // Hide text on smaller screens
+    span {
+      display: none;
+    }
+  }
 `;
 
 const ChainIcon = styled.div<{ background: string }>`
@@ -64,7 +82,9 @@ const CustomConnectButton: React.FC = () => {
               <>
                 <StyledButton onClick={openChainModal} type="button">
                   {chain.hasIcon && (
-                    <ChainIcon background={chain.iconBackground}>
+                    <ChainIcon
+                      background={chain.iconBackground || "defaultBackground"}
+                    >
                       {chain.iconUrl && (
                         <ChainImage
                           alt={chain.name ?? "Chain icon"}
@@ -73,10 +93,12 @@ const CustomConnectButton: React.FC = () => {
                       )}
                     </ChainIcon>
                   )}
-                  {chain.name}
+                  <span>{chain.name}</span>
                 </StyledButton>
+
                 <StyledButton onClick={openAccountModal} type="button">
-                  {account.displayName}
+                  <FaWallet /> {/* Using FaWallet as the wallet icon */}
+                  <span>{account.displayName}</span>
                   {account.displayBalance ? ` (${account.displayBalance})` : ""}
                 </StyledButton>
               </>
