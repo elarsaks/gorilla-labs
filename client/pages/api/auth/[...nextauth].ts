@@ -7,7 +7,8 @@ export default NextAuth({
         LinkedInProvider({
             clientId: process.env.NEXT_LINKEDIN_CLIENT_ID || '',
             clientSecret: process.env.NEXT_LINKEDIN_CLIENT_SECRET || '',
-            
+
+
         }),
         // ...add other providers if needed
     ],
