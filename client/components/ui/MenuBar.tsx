@@ -1,9 +1,10 @@
-import { FaStore, FaUser, FaPlus } from "react-icons/fa";
-import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import { FaPlus, FaStore, FaUser } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { signIn, signOut, useSession } from 'next-auth/react';
+
+import { Button } from './Button'
 import styled from "styled-components";
-// import CustomConnectButton from "./CustomConnectButton";
-import LinkedInLoginButton from './LinkedInLoginButton';
+import { useRouter } from "next/router";
 
 export const NavBar = styled.nav`
   background: rgba(0, 0, 0, 0.9);
@@ -36,39 +37,6 @@ export const Logo = styled.div`
   }
 `;
 
-// TODO: Shared button
-export const Button = styled.button`
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  margin-left: 1rem;
-  font-size: 1rem;
-  font-family: Arial, sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-
-  span {
-    margin-left: 0.5rem;
-  }
-
-  &:hover {
-    color: aqua;
-
-    svg {
-      color: aqua;
-    }
-  }
-
-  @media (max-width: 768px) {
-    span {
-      display: none;
-    }
-  }
-`;
-
 export const Icons = styled.div`
   display: flex;
   align-items: center;
@@ -84,6 +52,7 @@ export const Icons = styled.div`
 const MenuBar: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
     setIsClient(true);
@@ -105,6 +74,15 @@ const MenuBar: React.FC = () => {
     router.push("/create"); // Update this with your actual create route
   };
 
+  const handleAuthClick = () => {
+    if (session) {
+      signOut({ callbackUrl: '/' });
+    } else {
+      signIn('linkedin', { callbackUrl: '/' });
+    }
+  };
+
+
   return (
     <>
       <NavBar>
@@ -124,7 +102,11 @@ const MenuBar: React.FC = () => {
           </Button>
         </LogoAndButtons>
 
-        <LinkedInLoginButton />
+
+        <Button onClick={handleAuthClick}>
+          <FaUser />
+          {session ? 'Log Out' : 'Log In'}
+        </Button>
 
       </NavBar>
     </>
