@@ -108,7 +108,7 @@ const MenuBar: React.FC = () => {
         <NavButton
           icon={<FaUser />}
           text={session ? 'Log Out' : 'Log In'}
-          onClick={navigateToCreate}
+          onClick={handleAuthClick}
           marginright="2em"
         />
 
