@@ -49,14 +49,13 @@ resource "aws_instance" "gorilla_labs" {
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
 
   user_data = <<-EOF
-                #!/bin/bash
-                sudo apt-get update
-                sudo apt-get install -y nginx
-                curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-                sudo apt-get install -y nodejs
-                sudo apt-get install -y postgresql postgresql-contrib
-                EOF
-
+               #!/bin/bash
+              sudo yum update -y
+              sudo amazon-linux-extras install docker
+              sudo service docker start
+              sudo systemctl enable docker
+              sudo usermod -a -G docker ec2-user
+              EOF
   tags = {
     Name = "Gorilla Labs"
   }
