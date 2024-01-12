@@ -125,7 +125,7 @@ const MenuBar: React.FC = () => {
         </LogoAndButtons>
 
         <LinkedInLoginButton />
-        {/* <CustomConnectButton /> TODO: Build wallet connection under /Checkout & /Profile*/}
+
       </NavBar>
     </>
   );
