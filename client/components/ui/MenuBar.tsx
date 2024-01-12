@@ -2,7 +2,7 @@ import { FaPlus, FaStore, FaUser } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from 'next-auth/react';
 
-import { Button } from './Button'
+import { NavButton } from './NavButton'
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -91,22 +91,26 @@ const MenuBar: React.FC = () => {
             <img src="/assets/logo.png" alt="Gorilla Labs" />
           </Logo>
 
-          <Button onClick={navigateToMarketplace}>
-            <FaStore />
-            <span> Marketplace</span>
-          </Button>
+          <NavButton
+            icon={<FaStore />}
+            text={"MARKETPLACE"}
+            onClick={navigateToMarketplace}
+          />
 
-          <Button onClick={navigateToCreate}>
-            <FaPlus />
-            <span> Create</span>
-          </Button>
+          <NavButton
+            icon={<FaPlus />}
+            text={"CREATE"}
+            onClick={navigateToCreate}
+            marginleft="0px"
+          />
         </LogoAndButtons>
 
-
-        <Button onClick={handleAuthClick}>
-          <FaUser />
-          {session ? 'Log Out' : 'Log In'}
-        </Button>
+        <NavButton
+          icon={<FaUser />}
+          text={session ? 'Log Out' : 'Log In'}
+          onClick={navigateToCreate}
+          marginright="2em"
+        />
 
       </NavBar>
     </>
