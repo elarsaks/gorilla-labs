@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { FaWallet } from "react-icons/fa"; // Importing FaWallet as the wallet icon
 
 // Define styled components
@@ -48,7 +48,7 @@ type ComponentType = React.ComponentType<ComponentProps>;
 
 // Higher-order function to filter out non-DOM props
 const withFilteredProps = (Component: ComponentType) => {
-  return ({ isReady, ...props }: { isReady: boolean; [key: string]: any }) => (
+  return ({ isReady, ...props }: { isReady: boolean;[key: string]: any }) => (
     <Component
       {...props}
       style={{

@@ -26,12 +26,8 @@ const wagmiConfig = createConfig({
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   );
 }
