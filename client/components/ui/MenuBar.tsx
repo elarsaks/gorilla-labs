@@ -2,7 +2,8 @@ import { FaStore, FaUser, FaPlus } from "react-icons/fa";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import CustomConnectButton from "./CustomConnectButton";
+// import CustomConnectButton from "./CustomConnectButton";
+import LinkedInLoginButton from './LinkedInLoginButton';
 
 export const NavBar = styled.nav`
   background: rgba(0, 0, 0, 0.9);
@@ -109,7 +110,7 @@ const MenuBar: React.FC = () => {
       <NavBar>
         <LogoAndButtons>
           <Logo onClick={handleLogoClick}>
-            <img src="/assets/logo.png" alt="Gorilla Labs Logo" />
+            <img src="/assets/logo.png" alt="Gorilla Labs" />
           </Logo>
 
           <Button onClick={navigateToMarketplace}>
@@ -123,7 +124,8 @@ const MenuBar: React.FC = () => {
           </Button>
         </LogoAndButtons>
 
-        <CustomConnectButton />
+        <LinkedInLoginButton />
+        {/* <CustomConnectButton /> TODO: Build wallet connection under /Checkout & /Profile*/}
       </NavBar>
     </>
   );
