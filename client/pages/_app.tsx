@@ -1,34 +1,34 @@
-import type { AppProps } from "next/app";
-import Layout from "../components/ui/Layout";
+// pages/_app.tsx
+import { AppProps } from 'next/app';
+import { SessionProvider } from 'next-auth/react';
+import { ReactElement, ReactNode } from 'react';
+import { NextPage } from 'next';
+import { Session } from 'next-auth';
+import Layout from '@/components/ui/Layout';
 
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
-import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { mainnet, polygon, optimism, arbitrum, base, zora } from "wagmi/chains";
-//import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+  pageProps: {
+    session?: Session;
+  };
+};
 
-const { chains, publicClient } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, base, zora], // TODO: Add your own chains here
-  [/* alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),*/ publicProvider()] // TODO: Add your own Alchemy API key here
-);
-const { connectors } = getDefaultWallets({
-  appName: "My RainbowKit App",
-  projectId: "YOUR_PROJECT_ID",
-  chains,
-});
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => page);
 
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-});
-
-export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <SessionProvider session={pageProps.session}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+
+    </SessionProvider>
   );
 }
+
+export default MyApp;

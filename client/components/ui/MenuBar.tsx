@@ -1,9 +1,10 @@
-import { FaStore, FaUser, FaPlus } from "react-icons/fa";
-import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import { FaPlus, FaStore, FaUser } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { signIn, signOut, useSession } from 'next-auth/react';
+
+import { NavButton } from './NavButton'
 import styled from "styled-components";
-// import CustomConnectButton from "./CustomConnectButton";
-import LinkedInLoginButton from './LinkedInLoginButton';
+import { useRouter } from "next/router";
 
 export const NavBar = styled.nav`
   background: rgba(0, 0, 0, 0.9);
@@ -36,39 +37,6 @@ export const Logo = styled.div`
   }
 `;
 
-// TODO: Shared button
-export const Button = styled.button`
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  margin-left: 1rem;
-  font-size: 1rem;
-  font-family: Arial, sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-
-  span {
-    margin-left: 0.5rem;
-  }
-
-  &:hover {
-    color: aqua;
-
-    svg {
-      color: aqua;
-    }
-  }
-
-  @media (max-width: 768px) {
-    span {
-      display: none;
-    }
-  }
-`;
-
 export const Icons = styled.div`
   display: flex;
   align-items: center;
@@ -84,6 +52,7 @@ export const Icons = styled.div`
 const MenuBar: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
     setIsClient(true);
@@ -105,6 +74,15 @@ const MenuBar: React.FC = () => {
     router.push("/create"); // Update this with your actual create route
   };
 
+  const handleAuthClick = () => {
+    if (session) {
+      signOut({ callbackUrl: '/' });
+    } else {
+      signIn('linkedin', { callbackUrl: '/' });
+    }
+  };
+
+
   return (
     <>
       <NavBar>
@@ -113,19 +91,27 @@ const MenuBar: React.FC = () => {
             <img src="/assets/logo.png" alt="Gorilla Labs" />
           </Logo>
 
-          <Button onClick={navigateToMarketplace}>
-            <FaStore />
-            <span> Marketplace</span>
-          </Button>
+          <NavButton
+            icon={<FaStore />}
+            text={"MARKETPLACE"}
+            onClick={navigateToMarketplace}
+          />
 
-          <Button onClick={navigateToCreate}>
-            <FaPlus />
-            <span> Create</span>
-          </Button>
+          <NavButton
+            icon={<FaPlus />}
+            text={"CREATE"}
+            onClick={navigateToCreate}
+            marginleft="0px"
+          />
         </LogoAndButtons>
 
-        <LinkedInLoginButton />
-        {/* <CustomConnectButton /> TODO: Build wallet connection under /Checkout & /Profile*/}
+        <NavButton
+          icon={<FaUser />}
+          text={session ? 'Log Out' : 'Log In'}
+          onClick={handleAuthClick}
+          marginright="2em"
+        />
+
       </NavBar>
     </>
   );
