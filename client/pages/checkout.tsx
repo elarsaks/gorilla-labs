@@ -1,4 +1,5 @@
 import React from 'react';
+
 // import "@rainbow-me/rainbowkit/styles.css";
 // import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 // import { configureChains, createConfig, WagmiConfig } from "wagmi";
@@ -22,18 +23,24 @@ import React from 'react';
 //     publicClient,
 // });
 
+// const Checkout: React.FC = () => {
+//     return (
+//         <div>
+
+// <WagmiConfig config= { wagmiConfig } >
+// <RainbowKitProvider chains={ chains }>
+//     <div>
+//     <h1>Checkout Page < /h1>
+//         < /div>
+//         < /RainbowKitProvider>
+//         < /WagmiConfig>
+//         < /div>
+//     );
+// };
+
 const Checkout: React.FC = () => {
     return (
-        <div>
-
-        // <WagmiConfig config= { wagmiConfig } >
-        // <RainbowKitProvider chains={ chains }>
-        //     <div>
-        //     <h1>Checkout Page < /h1>
-        //         < /div>
-        //         < /RainbowKitProvider>
-        //         < /WagmiConfig>
-        < /div>
+        <></>
     );
 };
 

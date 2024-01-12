@@ -1,7 +1,7 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { FaWallet } from "react-icons/fa"; // Importing FaWallet as the wallet icon
 import React from "react";
 import styled from "styled-components";
-// import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { FaWallet } from "react-icons/fa"; // Importing FaWallet as the wallet icon
 
 // Define styled components
 const StyledButton = styled.button`
