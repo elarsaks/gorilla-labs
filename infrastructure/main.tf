@@ -49,7 +49,43 @@ resource "aws_instance" "gorilla_labs" {
   availability_zone = "eu-north-1a"
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
 
-  # ... (no changes in the instance configuration)
+  user_data = <<-EOF
+                #!/bin/bash
+                # Update system packages
+                sudo apt-get update
+                # Install Nginx, Node.js, and PostgreSQL
+                sudo apt-get install -y nginx
+                curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+                sudo apt-get install -y nodejs
+                sudo apt-get install -y postgresql postgresql-contrib
+                # Start and enable Nginx service
+                sudo systemctl start nginx
+                sudo systemctl enable nginx
+                # Create a simple html file to serve
+                echo '<!DOCTYPE html>
+                <html>
+                <head>
+                <title>Welcome to Gorilla Labs!</title>
+                <style>
+                html { color-scheme: light dark; }
+                body { width: 35em; margin: 0 auto;
+                font-family: Tahoma, Verdana, Arial, sans-serif; }
+                </style>
+                </head>
+                <body>
+                <h1>Welcome to Gorilla Labs!</h1>
+                <p>If you see this page, the Nginx web server is successfully installed and working on AWS EC2 instance. Further configuration is required.</p>
+                <p>For online documentation and support please refer to
+                <a href="http://nginx.org/">nginx.org</a>.<br/>
+                Commercial support is available at
+                <a href="http://nginx.com/">nginx.com</a>.</p>
+                <p><em>Thank you for using nginx.</em></p>
+                </body>
+                </html>' | sudo tee /var/www/html/index.html
+                # Restart Nginx to load the new configuration
+                sudo systemctl restart nginx
+                EOF
+
 
   tags = {
     Name           = "Gorilla Labs Instance"
