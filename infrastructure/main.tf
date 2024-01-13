@@ -38,7 +38,8 @@ resource "aws_security_group" "gorilla_labs_sg" {
   }
 
   tags = {
-    Name = "gorilla-labs-sg"
+    Name           = "gorilla-labs-sg"
+    "Gorilla Labs" = "true"
   }
 }
 
@@ -58,16 +59,18 @@ resource "aws_instance" "gorilla_labs" {
                 EOF
 
   tags = {
-    Name = "Gorilla Labs"
+    Name           = "Gorilla Labs Instance"
+    "Gorilla Labs" = "true"
   }
 }
 
 resource "aws_ebs_volume" "gorilla_labs_ebs" {
   availability_zone = "eu-north-1a"
-  size              = 10 # Size in GB
+  size              = 10
 
   tags = {
-    Name = "Gorilla Labs EBS"
+    Name           = "Gorilla Labs EBS"
+    "Gorilla Labs" = "true"
   }
 }
 
@@ -81,6 +84,7 @@ resource "aws_eip" "gorilla_labs_eip" {
   instance = aws_instance.gorilla_labs.id
 
   tags = {
-    Name = "Gorilla Labs EIP"
+    Name           = "Gorilla Labs EIP"
+    "Gorilla Labs" = "true"
   }
 }
