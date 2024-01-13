@@ -64,7 +64,7 @@ resource "aws_instance" "gorilla_labs" {
 
 resource "aws_ebs_volume" "gorilla_labs_ebs" {
   availability_zone = "eu-north-1a"
-  size              = 10 # TODO: Size in GB
+  size              = 10 # Size in GB
 
   tags = {
     Name = "Gorilla Labs EBS"
@@ -75,4 +75,12 @@ resource "aws_volume_attachment" "gorilla_labs_ebs_attachment" {
   device_name = "/dev/sdh"
   volume_id   = aws_ebs_volume.gorilla_labs_ebs.id
   instance_id = aws_instance.gorilla_labs.id
+}
+
+resource "aws_eip" "gorilla_labs_eip" {
+  instance = aws_instance.gorilla_labs.id
+
+  tags = {
+    Name = "Gorilla Labs EIP"
+  }
 }
