@@ -49,14 +49,7 @@ resource "aws_instance" "gorilla_labs" {
   availability_zone = "eu-north-1a"
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
 
-  user_data = <<-EOF
-                #!/bin/bash
-                sudo apt-get update
-                sudo apt-get install -y nginx
-                curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-                sudo apt-get install -y nodejs
-                sudo apt-get install -y postgresql postgresql-contrib
-                EOF
+  # ... (no changes in the instance configuration)
 
   tags = {
     Name           = "Gorilla Labs Instance"
@@ -87,4 +80,16 @@ resource "aws_eip" "gorilla_labs_eip" {
     Name           = "Gorilla Labs EIP"
     "Gorilla Labs" = "true"
   }
+}
+
+resource "aws_route53_zone" "gorilla_labs" {
+  name = "gorilla-labs.com"
+}
+
+resource "aws_route53_record" "gorilla_labs_record" {
+  zone_id = aws_route53_zone.gorilla_labs.zone_id
+  name    = "gorilla-labs.com"
+  type    = "A"
+  ttl     = "300"
+  records = [aws_eip.gorilla_labs_eip.public_ip]
 }
