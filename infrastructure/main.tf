@@ -116,10 +116,18 @@ resource "aws_eip" "gorilla_labs_eip" {
     Name           = "Gorilla Labs EIP"
     "Gorilla Labs" = "true"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_route53_zone" "gorilla_labs" {
   name = "gorilla-labs.com"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_route53_record" "gorilla_labs_record" {
@@ -128,6 +136,10 @@ resource "aws_route53_record" "gorilla_labs_record" {
   type    = "A"
   ttl     = "300"
   records = [aws_eip.gorilla_labs_eip.public_ip]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_route53_record" "www_gorilla_labs_record" {
@@ -136,4 +148,8 @@ resource "aws_route53_record" "www_gorilla_labs_record" {
   type    = "A"
   ttl     = "300"
   records = [aws_eip.gorilla_labs_eip.public_ip]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
