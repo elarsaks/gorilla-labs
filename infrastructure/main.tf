@@ -44,7 +44,7 @@ resource "aws_security_group" "gorilla_labs_sg" {
 }
 
 resource "aws_instance" "gorilla_labs" {
-  ami               = "ami-027ae750a83e2c590"
+  ami               = "ami-0014ce3e52359afbd"
   instance_type     = "t3.micro"
   availability_zone = "eu-north-1a"
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
