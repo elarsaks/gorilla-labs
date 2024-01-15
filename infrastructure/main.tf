@@ -45,7 +45,7 @@ resource "aws_security_group" "gorilla_labs_sg" {
 
 resource "aws_key_pair" "deployer_key" {
   key_name   = "gorilla-labs-deployer-key"
-  public_key = file("terraform_key.pub")
+  public_key = file("./terraform_key.pub")
 }
 
 resource "aws_instance" "gorilla_labs" {
