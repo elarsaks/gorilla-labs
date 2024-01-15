@@ -43,16 +43,19 @@ resource "aws_security_group" "gorilla_labs_sg" {
   }
 }
 
+resource "aws_key_pair" "deployer_key" {
+  key_name   = "gorilla-labs-deployer-key"
+  public_key = file("terraform_key.pub")
+}
+
 resource "aws_instance" "gorilla_labs" {
   ami               = "ami-0014ce3e52359afbd"
   instance_type     = "t3.micro"
   availability_zone = "eu-north-1a"
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
+  key_name          = aws_key_pair.deployer_key.key_name
 
-  provisioner "file" {
-    content     = file("./gorilla_labs_github_actions_ec2.pub")
-    destination = "~/.ssh/authorized_keys"
-  }
+
 
   user_data = <<-EOF
                 #!/bin/bash
@@ -122,9 +125,9 @@ resource "aws_eip" "gorilla_labs_eip" {
     "Gorilla Labs" = "true"
   }
 
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # resource "aws_route53_zone" "gorilla_labs" {
