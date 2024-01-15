@@ -1,4 +1,4 @@
-name: Deploy Next to Elastic Beanstalk
+name: Deploy Next to EC2
 
 on:
   push:
@@ -45,33 +45,24 @@ jobs:
         run: |
           zip -r ../deploy.zip .next package.json next.config.js public
 
-      # Verify AWS credentials are accessible
-      - name: Verify AWS credentials
-        run: |
-          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
-            echo "AWS_ACCESS_KEY_ID is not set."
-            exit 1
-          else
-            echo "AWS_ACCESS_KEY_ID is set."
-          fi
-
-          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
-            echo "AWS_SECRET_ACCESS_KEY is not set."
-            exit 1
-          else
-            echo "AWS_SECRET_ACCESS_KEY is set."
-          fi
-
-      # Deploy to AWS Elastic Beanstalk
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v21
+      # Deploy to EC2 instance using SSH
+      - name: Deploy to EC2
+        uses: appleboy/scp-action@master
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: gorilla-labs-2
-          environment_name: Gorilla-labs-2-env
-          version_label: ${{ github.sha }}
-          region: eu-north-1
-          deployment_package: deploy.zip
-          wait_for_deployment: true
-          use_existing_version_if_available: true
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          source: "deploy.zip"
+          target: "/path/to/deployment/directory"
+
+      # Execute deployment script on EC2 instance (optional)
+      - name: Execute deployment script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            cd /path/to/deployment/directory
+            unzip deploy.zip
+            # Add any additional commands needed for deployment, like restarting your Node application

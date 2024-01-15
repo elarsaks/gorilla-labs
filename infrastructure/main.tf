@@ -49,6 +49,11 @@ resource "aws_instance" "gorilla_labs" {
   availability_zone = "eu-north-1a"
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
 
+  provisioner "file" {
+    content     = file("./gorilla_labs_github_actions_ec2.pub")
+    destination = "~/.ssh/authorized_keys"
+  }
+
   user_data = <<-EOF
                 #!/bin/bash
                 # Update system packages
