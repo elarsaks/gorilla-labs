@@ -55,6 +55,7 @@ resource "aws_instance" "gorilla_labs" {
     # Update system packages
     sudo apt-get update
     # Install unzip, Nginx, Node.js, and PostgreSQL
+    echo "Installing unzip, Nginx, Node.js, and PostgreSQL..."
     sudo apt-get install -y unzip nginx
     curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
     sudo apt-get install -y nodejs
@@ -66,7 +67,7 @@ resource "aws_instance" "gorilla_labs" {
 
     # Setup Nginx configuration (Assuming you have a proper nginx.conf)
     # IMPORTANT: Update the path to your nginx.conf if it's different
-    sudo cp /path/to/your/nginx.conf /home/ubuntu/nginx/nginx.conf
+    sudo cp ../nginx/nginx.conf /home/ubuntu/nginx/nginx.conf
     sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
     sudo systemctl restart nginx
 
