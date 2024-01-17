@@ -34,8 +34,3 @@ terraform.rc
 
 # Logs
 crash.log
-
-# SSH Keys
-gorilla_labs_github_actions_ec2
-gorilla_labs_github_actions_ec2.pub
-terraform_key.pub

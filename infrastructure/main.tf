@@ -43,19 +43,12 @@ resource "aws_security_group" "gorilla_labs_sg" {
   }
 }
 
-resource "aws_key_pair" "deployer_key" {
-  key_name   = "gorilla-labs-deployer-key"
-  public_key = file("./terraform_key.pub")
-}
-
 resource "aws_instance" "gorilla_labs" {
   ami               = "ami-0014ce3e52359afbd"
   instance_type     = "t3.micro"
   availability_zone = "eu-north-1a"
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
-  key_name          = aws_key_pair.deployer_key.key_name
-
-
+  key_name          = "gorilla-labs-deployer-key"
 
   user_data = <<-EOF
                 #!/bin/bash
@@ -66,32 +59,21 @@ resource "aws_instance" "gorilla_labs" {
                 curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
                 sudo apt-get install -y nodejs
                 sudo apt-get install -y postgresql postgresql-contrib
+
+                # Create directories
+                sudo mkdir -p /home/ubuntu/nginx
+                sudo mkdir -p /home/ubuntu/nextjs
+
+                # Copy existing Nginx config, adjust the following line to your setup
+                sudo cp /path/to/your/nginx.conf /home/ubuntu/nginx/nginx.conf
+
+                # Configure Nginx to use the new config file and serve HTML
+                sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
+                sudo systemctl restart nginx
+
                 # Start and enable Nginx service
                 sudo systemctl start nginx
                 sudo systemctl enable nginx
-                # Create a simple html file to serve
-                echo '<!DOCTYPE html>
-                <html>
-                <head>
-                <title>Welcome to Gorilla Labs!</title>
-                <style>
-                html { color-scheme: light dark; }
-                body { width: 35em; margin: 0 auto;
-                font-family: Tahoma, Verdana, Arial, sans-serif; }
-                </style>
-                </head>
-                <body>
-                <h1>Welcome to Gorilla Labs!</h1>
-                <p>If you see this page, the Nginx web server is successfully installed and working on AWS EC2 instance. Further configuration is required.</p>
-                <p>For online documentation and support please refer to
-                <a href="http://nginx.org/">nginx.org</a>.<br/>
-                Commercial support is available at
-                <a href="http://nginx.com/">nginx.com</a>.</p>
-                <p><em>Thank you for using nginx.</em></p>
-                </body>
-                </html>' | sudo tee /var/www/html/index.html
-                # Restart Nginx to load the new configuration
-                sudo systemctl restart nginx
                 EOF
 
 
@@ -101,21 +83,6 @@ resource "aws_instance" "gorilla_labs" {
   }
 }
 
-resource "aws_ebs_volume" "gorilla_labs_ebs" {
-  availability_zone = "eu-north-1a"
-  size              = 10
-
-  tags = {
-    Name           = "Gorilla Labs EBS"
-    "Gorilla Labs" = "true"
-  }
-}
-
-resource "aws_volume_attachment" "gorilla_labs_ebs_attachment" {
-  device_name = "/dev/sdh"
-  volume_id   = aws_ebs_volume.gorilla_labs_ebs.id
-  instance_id = aws_instance.gorilla_labs.id
-}
 
 resource "aws_eip" "gorilla_labs_eip" {
   instance = aws_instance.gorilla_labs.id
@@ -129,6 +96,24 @@ resource "aws_eip" "gorilla_labs_eip" {
     prevent_destroy = true
   }
 }
+
+# TODO: Use extra non destroyable volume for the SQL
+# resource "aws_ebs_volume" "gorilla_labs_ebs" {
+#   availability_zone = "eu-north-1a"
+#   size              = 10
+
+#   tags = {
+#     Name           = "Gorilla Labs EBS"
+#     "Gorilla Labs" = "true"
+#   }
+# }
+
+# resource "aws_volume_attachment" "gorilla_labs_ebs_attachment" {
+#   device_name = "/dev/sdh"
+#   volume_id   = aws_ebs_volume.gorilla_labs_ebs.id
+#   instance_id = aws_instance.gorilla_labs.id
+# }
+
 
 # resource "aws_route53_zone" "gorilla_labs" {
 #   name = "gorilla-labs.com"
