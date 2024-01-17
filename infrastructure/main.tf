@@ -58,7 +58,7 @@ resource "aws_instance" "gorilla_labs" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("${path.module}/path/to/your/private_key.pem")
+      private_key = file("../keys/gorilla-labs-deployer-key.pem")
       host        = self.public_ip
     }
   }
@@ -85,7 +85,6 @@ resource "aws_instance" "gorilla_labs" {
     sudo systemctl start nginx
     sudo systemctl enable nginx
   EOF
-
 
 
   tags = {
