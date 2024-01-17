@@ -4,21 +4,19 @@
   <a href="https://gorilla-labs-sandbox.org/">Live Example</a>
 </h3>
 
-
 # About
 
-***What it is:***  
+**_What it is:_**  
 This is an NFT marketplace developed using Next.js and TypeScript.  
 I am building it whithout planning, just exploring like doodling.  
-More to come...  
+More to come...
 
-***The purpose of this project:***  
-The goal is to gain experience with Next JS. 
-
+**_The purpose of this project:_**  
+The goal is to gain experience with Next JS.
 
 # Installation and running
 
-**Installation:**  
+**Installation:**
 
 ```bash
 npm install
@@ -26,17 +24,12 @@ npm install
 
 **Running:**  
 To run the UI, use the following command in this folder:
+
 ```bash
 npm run dev
 ```
 
 **App will start on port:**
-| App              | URL                                 |
+| App | URL |
 |------------------|-------------------------------------|
 | Front-end | [http://localhost:3000](http://localhost:3000) |
-
-
-
-
-
-

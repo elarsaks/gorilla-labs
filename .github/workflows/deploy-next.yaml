@@ -45,24 +45,34 @@ jobs:
         run: |
           zip -r ../deploy.zip .next package.json next.config.js public
 
+      # Validate SSH access to EC2 instance
+      - name: Validate SSH Access
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: echo "SSH Connection Successful"
+
       # Deploy to EC2 instance using SSH
       - name: Deploy to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ec2-user
+          username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           source: "deploy.zip"
-          target: "/path/to/deployment/directory"
+          target: "/home/ubuntu/nextjs"
 
       # Execute deployment script on EC2 instance (optional)
       - name: Execute deployment script
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ec2-user
+          username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
-            cd /path/to/deployment/directory
+            cd /home/ubuntu/nextjs
             unzip deploy.zip
-            # Add any additional commands needed for deployment, like restarting your Node application
+            npm install  
+            npm run start
