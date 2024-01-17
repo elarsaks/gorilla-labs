@@ -3,7 +3,7 @@ name: Build and Deploy Docker Image to EC2
 on:
   push:
     branches:
-      - deploy-next # Adjust the branch as needed
+      - deploy-next
 
 jobs:
   build-and-deploy:
@@ -22,13 +22,10 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push elarsaks/gorilla-labs-client:${{ github.sha }}
 
-      - name: Install SSH key for EC2
-        run: echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ssh_key.pem && chmod 600 ssh_key.pem
-
       - name: Deploy Docker image to EC2
         run: |
-          scp -i ssh_key.pem -o StrictHostKeyChecking=no elarsaks/gorilla-labs-client:${{ github.sha }} ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/elarsaks/gorilla-labs-client:${{ github.sha }}
-          ssh -i ssh_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "docker pull elarsaks/gorilla-labs-client:${{ github.sha }} && docker run -d --name gorilla-labs-client -p 80:80 elarsaks/gorilla-labs-client:${{ github.sha }}"
+          scp -o StrictHostKeyChecking=no elarsaks/gorilla-labs-client:${{ github.sha }} ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/elarsaks/gorilla-labs-client:${{ github.sha }}
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "docker pull elarsaks/gorilla-labs-client:${{ github.sha }} && docker run -d --name gorilla-labs-client -p 80:80 elarsaks/gorilla-labs-client:${{ github.sha }}"
 
       - name: Cleanup
         run: rm ssh_key.pem
