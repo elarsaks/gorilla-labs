@@ -6,22 +6,27 @@ on:
       - deploy-next
 
 jobs:
-  deploy:
+  checkout:
     runs-on: ubuntu-latest
 
     steps:
-      # checkout the repository content to github runner.
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      # Package the Next.js application for deployment
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Package application
         working-directory: ./client
         run: |
           # Zip the project files
           zip -r ../deploy.zip .
 
-      # Validate SSH access to EC2 instance
+  validate-ssh-access:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Validate SSH Access
         uses: appleboy/ssh-action@master
         with:
@@ -30,7 +35,10 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: echo "SSH Connection Successful"
 
-      # Deploy to EC2 instance using SSH
+  deploy-to-ec2:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Deploy to EC2
         uses: appleboy/scp-action@master
         with:
@@ -40,7 +48,10 @@ jobs:
           source: "deploy.zip"
           target: "/home/ubuntu/nextjs"
 
-      # Execute deployment script on EC2 instance (optional)
+  execute-deployment-script:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Execute deployment script
         uses: appleboy/ssh-action@master
         with:
