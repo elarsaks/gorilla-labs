@@ -65,7 +65,7 @@ resource "aws_instance" "gorilla_labs" {
                 sudo mkdir -p /home/ubuntu/nextjs
 
                 # Copy existing Nginx config, adjust the following line to your setup
-                sudo cp /path/to/your/nginx.conf /home/ubuntu/nginx/nginx.conf
+                sudo cp ../nginx/nginx.conf /home/ubuntu/nginx/nginx.conf
 
                 # Configure Nginx to use the new config file and serve HTML
                 sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
@@ -82,7 +82,6 @@ resource "aws_instance" "gorilla_labs" {
     "Gorilla Labs" = "true"
   }
 }
-
 
 resource "aws_eip" "gorilla_labs_eip" {
   instance = aws_instance.gorilla_labs.id
