@@ -69,9 +69,9 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ec2-user
+          username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/nextjs
             unzip deploy.zip
-            # Add any additional commands needed for deployment, like restarting your Node application
+            
