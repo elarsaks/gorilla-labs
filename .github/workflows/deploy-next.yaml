@@ -18,9 +18,8 @@ jobs:
 
     steps:
       - name: Package application
-        working-directory: client
         run: |
-          # Zip the project files
+          cd client
           zip -r ../deploy.zip .
 
   validate-ssh-access:
