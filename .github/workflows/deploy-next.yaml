@@ -14,36 +14,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # setup nodejs environment
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: "18.16.1"
-
-      # cache the dependencies to speed up the build
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ./client/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # install dependencies
-      - name: Install dependencies
-        working-directory: ./client
-        run: npm install
-
-      # build the next app
-      - name: Build
-        working-directory: ./client
-        run: npm run build
-
       # Package the Next.js application for deployment
       - name: Package application
         working-directory: ./client
         run: |
-          zip -r ../deploy.zip .next package.json next.config.js public
+          # Zip the project files
+          zip -r ../deploy.zip .
 
       # Validate SSH access to EC2 instance
       - name: Validate SSH Access
