@@ -50,12 +50,24 @@ resource "aws_instance" "gorilla_labs" {
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
   key_name          = "gorilla-labs-deployer-key"
 
+  # File provisioner to copy nginx.conf
+  provisioner "file" {
+    source      = "../nginx/nginx.conf"
+    destination = "/home/ubuntu/nginx/nginx.conf"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("${path.module}/path/to/your/private_key.pem")
+      host        = self.public_ip
+    }
+  }
+
   user_data = <<-EOF
     #!/bin/bash
     # Update system packages
     sudo apt-get update
     # Install unzip, Nginx, Node.js, and PostgreSQL
-    echo "Installing unzip, Nginx, Node.js, and PostgreSQL..."
     sudo apt-get install -y unzip nginx
     curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
     sudo apt-get install -y nodejs
@@ -65,9 +77,7 @@ resource "aws_instance" "gorilla_labs" {
     sudo mkdir -p /home/ubuntu/nginx
     sudo mkdir -p /home/ubuntu/nextjs
 
-    # Setup Nginx configuration (Assuming you have a proper nginx.conf)
-    # IMPORTANT: Update the path to your nginx.conf if it's different
-    sudo cp ../nginx/nginx.conf /home/ubuntu/nginx/nginx.conf
+    # Setup Nginx configuration 
     sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
     sudo systemctl restart nginx
 
@@ -75,6 +85,8 @@ resource "aws_instance" "gorilla_labs" {
     sudo systemctl start nginx
     sudo systemctl enable nginx
   EOF
+
+
 
   tags = {
     Name           = "Gorilla Labs Instance"

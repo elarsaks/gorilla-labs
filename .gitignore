@@ -34,3 +34,6 @@ terraform.rc
 
 # Logs
 crash.log
+
+# Keys
+*.pem
