@@ -72,7 +72,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
-            sudo chown -R ubuntu:ubuntu /home/ubuntu/nextjs
             cd /home/ubuntu/nextjs
             unzip deploy.zip
             cd .next/standalone

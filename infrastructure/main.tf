@@ -62,8 +62,8 @@ resource "aws_instance" "gorilla_labs" {
     sudo apt-get install -y postgresql postgresql-contrib
 
     # Create directories
-    sudo mkdir -p /home/ubuntu/nginx
-    sudo mkdir -p /home/ubuntu/nextjs
+    # sudo mkdir -p /home/ubuntu/nginx
+    # sudo mkdir -p /home/ubuntu/nextjs
 
     # Setup Nginx configuration 
     sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
