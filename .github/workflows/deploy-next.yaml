@@ -45,6 +45,15 @@ jobs:
         run: |
           zip -r ../deploy.zip .next package.json next.config.js public
 
+      # Validate SSH access to EC2 instance
+      - name: Validate SSH Access
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: echo "SSH Connection Successful"
+
       # Deploy to EC2 instance using SSH
       - name: Deploy to EC2
         uses: appleboy/scp-action@master
