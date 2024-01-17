@@ -50,7 +50,6 @@ resource "aws_instance" "gorilla_labs" {
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
   key_name          = "gorilla-labs-deployer-key"
 
-
   user_data = <<-EOF
     #!/bin/bash
     # Update system packages
@@ -61,9 +60,8 @@ resource "aws_instance" "gorilla_labs" {
     sudo apt-get install -y nodejs
     sudo apt-get install -y postgresql postgresql-contrib
 
-    # Create directories
-    # sudo mkdir -p /home/ubuntu/nginx
-    # sudo mkdir -p /home/ubuntu/nextjs
+    # Install PM2 globally
+    sudo npm install pm2@latest -g
 
     # Setup Nginx configuration 
     sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
@@ -79,6 +77,7 @@ resource "aws_instance" "gorilla_labs" {
     "Gorilla Labs" = "true"
   }
 }
+
 
 resource "aws_eip" "gorilla_labs_eip" {
   instance = aws_instance.gorilla_labs.id

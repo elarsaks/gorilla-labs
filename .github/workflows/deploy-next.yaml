@@ -82,6 +82,12 @@ jobs:
             # Build the Next.js application
             npm run build
 
-            # Start the application in production mode
-            # Note: This is a basic example. For production, consider using a process manager like PM2
-            nohup npm start & disown
+            # Use PM2 to start the application in production mode
+            pm2 start npm --name "next-app" -- start
+
+            # Save the PM2 process list and configuration
+            # This ensures that PM2 can resurrect your process list on server reboots
+            pm2 save
+
+            # Optionally, set PM2 to automatically resurrect your applications on system startup
+            pm2 startup
