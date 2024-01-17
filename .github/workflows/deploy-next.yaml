@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Package application
-        working-directory: ${{ github.workspace }}/client
+        working-directory: client
         run: |
           # Zip the project files
           zip -r ../deploy.zip .
