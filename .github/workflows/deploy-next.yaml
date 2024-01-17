@@ -74,4 +74,5 @@ jobs:
           script: |
             cd /home/ubuntu/nextjs
             unzip deploy.zip
+            npm install  
             npm run start
