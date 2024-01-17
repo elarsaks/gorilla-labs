@@ -72,7 +72,19 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
+            # Identify and stop the process running on port 3000
+            PID=$(lsof -t -i:3000)
+            if [ ! -z "$PID" ]; then
+              echo "Stopping process $PID on port 3000"
+              kill $PID
+            fi
+
+            # Move to the deployment directory
             cd /home/ubuntu/nextjs
-            unzip deploy.zip
+
+            # Unzip the new deployment
+            unzip -o deploy.zip
+
+            # Start the new instance
             cd .next/standalone
             node server.js
