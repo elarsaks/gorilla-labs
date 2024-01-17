@@ -54,22 +54,14 @@ resource "aws_instance" "gorilla_labs" {
     #!/bin/bash
     # Update system packages
     sudo apt-get update
-    # Install unzip, Nginx, Node.js, and PostgreSQL
-    sudo apt-get install -y unzip nginx
-    curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    sudo apt-get install -y postgresql postgresql-contrib
 
-    # Install PM2 globally
-    sudo npm install pm2@latest -g
+    # Install Docker and Docker Compose
+    sudo apt-get install -y docker.io
+    sudo apt-get install -y docker-compose
 
-    # Setup Nginx configuration 
-    sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
-    sudo systemctl restart nginx
-
-    # Start and enable Nginx service
-    sudo systemctl start nginx
-    sudo systemctl enable nginx
+    # Start and enable Docker service
+    sudo systemctl start docker
+    sudo systemctl enable docker
   EOF
 
   tags = {
