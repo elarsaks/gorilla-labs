@@ -51,31 +51,29 @@ resource "aws_instance" "gorilla_labs" {
   key_name          = "gorilla-labs-deployer-key"
 
   user_data = <<-EOF
-                #!/bin/bash
-                # Update system packages
-                sudo apt-get update
-                # Install Nginx, Node.js, and PostgreSQL
-                sudo apt-get install -y nginx
-                curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-                sudo apt-get install -y nodejs
-                sudo apt-get install -y postgresql postgresql-contrib
+    #!/bin/bash
+    # Update system packages
+    sudo apt-get update
+    # Install unzip, Nginx, Node.js, and PostgreSQL
+    sudo apt-get install -y unzip nginx
+    curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    sudo apt-get install -y postgresql postgresql-contrib
 
-                # Create directories
-                sudo mkdir -p /home/ubuntu/nginx
-                sudo mkdir -p /home/ubuntu/nextjs
+    # Create directories
+    sudo mkdir -p /home/ubuntu/nginx
+    sudo mkdir -p /home/ubuntu/nextjs
 
-                # Copy existing Nginx config, adjust the following line to your setup
-                sudo cp ../nginx/nginx.conf /home/ubuntu/nginx/nginx.conf
+    # Setup Nginx configuration (Assuming you have a proper nginx.conf)
+    # IMPORTANT: Update the path to your nginx.conf if it's different
+    sudo cp /path/to/your/nginx.conf /home/ubuntu/nginx/nginx.conf
+    sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
+    sudo systemctl restart nginx
 
-                # Configure Nginx to use the new config file and serve HTML
-                sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
-                sudo systemctl restart nginx
-
-                # Start and enable Nginx service
-                sudo systemctl start nginx
-                sudo systemctl enable nginx
-                EOF
-
+    # Start and enable Nginx service
+    sudo systemctl start nginx
+    sudo systemctl enable nginx
+  EOF
 
   tags = {
     Name           = "Gorilla Labs Instance"
