@@ -84,4 +84,4 @@ jobs:
 
             # Start the application in production mode
             # Note: This is a basic example. For production, consider using a process manager like PM2
-            nohup npm start &
+            nohup npm start & disown
