@@ -50,25 +50,15 @@ resource "aws_instance" "gorilla_labs" {
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
   key_name          = "gorilla-labs-deployer-key"
 
-  # File provisioner to copy nginx.conf
-  provisioner "file" {
-    source      = "../nginx/nginx.conf"
-    destination = "/home/ubuntu/nginx/nginx.conf"
 
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("../keys/gorilla-labs-deployer-key.pem")
-      host        = self.public_ip
-    }
-  }
 
   user_data = <<-EOF
     #!/bin/bash
     # Update system packages
     sudo apt-get update
     # Install unzip, Nginx, Node.js, and PostgreSQL
-    sudo apt-get install -y unzip nginx
+    sudo apt-get install -y nginx
+    sudo apt-get install -y unzip
     curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
     sudo apt-get install -y nodejs
     sudo apt-get install -y postgresql postgresql-contrib
@@ -85,6 +75,19 @@ resource "aws_instance" "gorilla_labs" {
     sudo systemctl start nginx
     sudo systemctl enable nginx
   EOF
+
+  # File provisioner to copy nginx.conf
+  provisioner "file" {
+    source      = "../nginx/nginx.conf"
+    destination = "/home/ubuntu/nginx/nginx.conf"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("../keys/gorilla-labs-deployer-key.pem")
+      host        = self.public_ip
+    }
+  }
 
 
   tags = {
@@ -117,6 +120,8 @@ resource "aws_eip" "gorilla_labs_eip" {
 #   }
 # }
 
+
+# These are resources that exist but are not managed by Terraform
 # resource "aws_volume_attachment" "gorilla_labs_ebs_attachment" {
 #   device_name = "/dev/sdh"
 #   volume_id   = aws_ebs_volume.gorilla_labs_ebs.id
