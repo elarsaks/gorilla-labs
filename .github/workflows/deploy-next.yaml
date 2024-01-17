@@ -24,8 +24,7 @@ jobs:
 
       - name: Deploy Docker image to EC2
         run: |
-          scp -o StrictHostKeyChecking=no elarsaks/gorilla-labs-client:${{ github.sha }} ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/elarsaks/gorilla-labs-client:${{ github.sha }}
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "docker pull elarsaks/gorilla-labs-client:${{ github.sha }} && docker run -d --name gorilla-labs-client -p 80:80 elarsaks/gorilla-labs-client:${{ github.sha }}"
-
+          scp -o StrictHostKeyChecking=no elarsaks/gorilla-labs-client:${{ github.sha }} ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/client/gorilla-labs-client:${{ github.sha }}
+      #  ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "docker pull elarsaks/gorilla-labs-client:${{ github.sha }} && docker run -d --name gorilla-labs-client -p 80:80 elarsaks/gorilla-labs-client:${{ github.sha }}"
       - name: Cleanup
         run: rm ssh_key.pem
