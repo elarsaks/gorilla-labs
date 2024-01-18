@@ -29,6 +29,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Validate SSH access to EC2 instance
+      - name: Validate SSH Access
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: echo "SSH Connection Successful"
+
       - name: Deploy Docker image to EC2
         run: |
           # SSH into the EC2 instance and pull/run the Docker image using the provided key
