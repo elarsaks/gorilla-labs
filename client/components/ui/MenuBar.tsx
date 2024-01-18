@@ -75,12 +75,11 @@ const MenuBar: React.FC = () => {
   };
 
   const handleAuthClick = () => {
-
-    // if (session) {
-    //   signOut({ callbackUrl: '/' });
-    // } else {
-    //   signIn('linkedin', { callbackUrl: '/' });
-    // }
+    if (session) {
+      signOut({ callbackUrl: '/' });
+    } else {
+      signIn('linkedin', { callbackUrl: '/' });
+    }
   };
 
 
