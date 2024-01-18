@@ -24,18 +24,8 @@ jobs:
 
       - name: Deploy Docker image to EC2
         run: |
-          # Save the private key to a temporary file
-          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ssh_key.pem
-          chmod 600 ssh_key.pem
-
-          # SSH into the EC2 instance and pull/run the Docker image
-          ssh -i ssh_key.pem ubuntu@${{ secrets.EC2_HOST }} <<EOF
+          # SSH into the EC2 instance and pull/run the Docker image using the provided key
+          ssh -o StrictHostKeyChecking=no -i <(echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}") ubuntu@${{ secrets.EC2_HOST }} <<EOF
             docker pull elarsaks/gorilla-labs-client:${{ github.sha }}
             docker run -d --name gorilla-labs-client -p 80:80 elarsaks/gorilla-labs-client:${{ github.sha }}
           EOF
-
-          # Cleanup: Remove the temporary SSH key file
-          rm -f ssh_key.pem
-
-      - name: Cleanup
-        run: rm ssh_key.pem
