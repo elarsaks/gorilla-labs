@@ -6,7 +6,7 @@ on:
       - deploy-next
 
 jobs:
-  build-and-deploy:
+  build-docker-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,12 +22,15 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push elarsaks/gorilla-labs-client:${{ github.sha }}
 
+  deploy-to-ec2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Deploy Docker image to EC2
         run: |
-          # Debug: Print the SSH key
-          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" 
-          echo "${{ secrets.EC2_HOST }}"
-
           # SSH into the EC2 instance and pull/run the Docker image using the provided key
           ssh -o StrictHostKeyChecking=no -i <(echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}") ubuntu@${{ secrets.EC2_HOST }} <<EOF
             docker pull elarsaks/gorilla-labs-client:${{ github.sha }}
