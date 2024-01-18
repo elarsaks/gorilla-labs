@@ -59,6 +59,9 @@ resource "aws_instance" "gorilla_labs" {
     sudo apt-get install -y docker.io
     sudo apt-get install -y docker-compose
 
+    # Add docker to user group
+    sudo usermod -aG docker ubuntu
+
     # Start and enable Docker service
     sudo systemctl start docker
     sudo systemctl enable docker
