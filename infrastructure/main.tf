@@ -65,31 +65,6 @@ resource "aws_instance" "gorilla_labs" {
     # Start and enable Docker service
     sudo systemctl start docker
     sudo systemctl enable docker
-
-    # Install Nginx
-    sudo apt-get install -y nginx
-
-    # Configure Nginx to forward requests to port 3000
-    sudo tee /etc/nginx/sites-available/your-app <<EOL
-    server {
-        listen 80;
-        server_name _;
-
-        location / {
-            proxy_pass http://localhost:3000;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-        }
-
-    }
-    EOL
-
-    # Create a symbolic link to enable the site
-    sudo ln -s /etc/nginx/sites-available/your-app /etc/nginx/sites-enabled/
-
-    # Test Nginx configuration and restart Nginx
-    sudo nginx -t
-    sudo systemctl restart nginx
   EOF
 
   tags = {
