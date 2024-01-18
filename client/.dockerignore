@@ -4,5 +4,4 @@ node_modules
 # Ignore any log files
 *.log
 
-# Ignore the build output directory
-build
+
