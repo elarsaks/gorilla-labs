@@ -3,10 +3,10 @@ name: Build and Deploy Docker Image to EC2
 on:
   push:
     branches:
-      - deploy-nginx
+      - deploy-next
 
 jobs:
-  build-docker-image:
+  build-next-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,7 @@ jobs:
         run: docker push elarsaks/gorilla-labs-client:${{ github.sha }}
 
   deploy-to-ec2:
-    needs: build-docker-image
+    needs: build-next-image
     runs-on: ubuntu-latest
     steps:
       - name: Docker Pull & Run From Hub
@@ -44,4 +44,4 @@ jobs:
                 docker rm gorilla-labs-client
             fi
             # Run the new container with restart policy
-            docker run -d --restart=always --name gorilla-labs-client -p 80:3000 -p 8080:3000 -p 443:3000 elarsaks/gorilla-labs-client:${{ github.sha }}
+            docker run -d --restart=always --name gorilla-labs-client -p 80:3000 elarsaks/gorilla-labs-client:${{ github.sha }}

@@ -1,13 +1,14 @@
 name: Build and Deploy Docker Image to EC2
 
-#! THIS IS DISABLED FOR NOW, DONT USE IT !
+# !Dont use this for now!
+
 on:
   push:
     branches:
-      - deploy-next
+      - deploy-nginx
 
 jobs:
-  build-docker-image:
+  build-nginx-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +25,7 @@ jobs:
         run: docker push elarsaks/gorilla-labs-nginx:${{ github.sha }}
 
   deploy-to-ec2:
-    needs: build-docker-image
+    needs: build-nginx-image
     runs-on: ubuntu-latest
     steps:
       - name: Docker Pull & Run From Hub
@@ -45,4 +46,4 @@ jobs:
                 docker rm gorilla-labs-nginx
             fi
             # Run the new container with restart policy
-            docker run -d --restart=always --name gorilla-labs-nginx -p 3000:3000 elarsaks/gorilla-labs-nginx:${{ github.sha }}
+            docker run -d --restart=always --name gorilla-labs-nginx -p 80:80 -p 8080:8080 -p 443:443 elarsaks/gorilla-labs-nginx:${{ github.sha }}
