@@ -3,7 +3,7 @@ version: "3.8"
 services:
   gorilla-labs-client:
     container_name: gorilla-labs-client
-    image: elarsaks/gorilla-labs-client:26e1c8d55acda8b1a927273cf0b1d339309c1872
+    image: elarsaks/gorilla-labs-client:b59837397526eb0c2b663e1ac581efe721cd4f4e
     ports:
       - "3000:3000"
     environment:
@@ -13,7 +13,7 @@ services:
 
   gorilla-labs-nginx:
     container_name: gorilla-labs-nginx
-    image: elarsaks/gorilla-labs-nginx:45d5c5da566e626f9adb63743f0cbf395a136cd7
+    image: elarsaks/gorilla-labs-nginx:763d89b4c0bf0652ebed1fcf480fb7af477440a6
     ports:
       - "80:80"
       - "443:443"
