@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  gorilla-labs-client:
+    container_name: gorilla-labs-client
+    image: elarsaks/gorilla-labs-client:26e1c8d55acda8b1a927273cf0b1d339309c1872
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXTAUTH_SECRET=${NEXT_PRODUCTION_SECRET}
+      - NODE_ENV=production
+    restart: always
+
+  gorilla-labs-nginx:
+    container_name: gorilla-labs-nginx
+    image: elarsaks/gorilla-labs-nginx:45d5c5da566e626f9adb63743f0cbf395a136cd7
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - gorilla-labs-client
+    restart: always

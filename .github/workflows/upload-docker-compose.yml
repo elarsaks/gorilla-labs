@@ -1,0 +1,72 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - upload-docker-compose
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set Environment Variables on EC2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        run: |
+          # Save private key to a temporary file
+          SSH_KEY_TEMP_FILE=$(mktemp)
+          echo "$SSH_PRIVATE_KEY" > "$SSH_KEY_TEMP_FILE"
+          chmod 600 "$SSH_KEY_TEMP_FILE"
+
+          # Execute SSH command
+          ssh -o StrictHostKeyChecking=no -i "$SSH_KEY_TEMP_FILE" ubuntu@${{ secrets.EC2_HOST }} "echo 'export NEXT_PRODUCTION_SECRET=${{ secrets.NEXT_PRODUCTION_SECRET }}' >> ~/.profile"
+
+          # Cleanup
+          rm -f "$SSH_KEY_TEMP_FILE"
+
+      - name: Shutdown and Cleanup Docker Containers
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        run: |
+          SSH_KEY_TEMP_FILE=$(mktemp)
+          echo "$SSH_PRIVATE_KEY" > "$SSH_KEY_TEMP_FILE"
+          chmod 600 "$SSH_KEY_TEMP_FILE"
+
+          # Execute SSH command to shutdown containers and cleanup
+          ssh -o StrictHostKeyChecking=no -i "$SSH_KEY_TEMP_FILE" ubuntu@${{ secrets.EC2_HOST }} << EOF
+            cd /home/ubuntu
+            docker-compose -f docker-compose-prod.yml down
+            docker system prune -af
+          EOF
+
+          rm -f "$SSH_KEY_TEMP_FILE"
+
+      - name: Copy Docker Compose file to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          port: 22
+          source: "docker-compose-prod.yml"
+          target: "/home/ubuntu"
+
+      - name: Build and Run Docker Compose on EC2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        run: |
+          SSH_KEY_TEMP_FILE=$(mktemp)
+          echo "$SSH_PRIVATE_KEY" > "$SSH_KEY_TEMP_FILE"
+          chmod 600 "$SSH_KEY_TEMP_FILE"
+
+          # Execute SSH command to build and run Docker Compose
+          ssh -o StrictHostKeyChecking=no -i "$SSH_KEY_TEMP_FILE" ubuntu@${{ secrets.EC2_HOST }} << EOF
+            cd /home/ubuntu
+            docker-compose -f docker-compose-prod.yml up --build -d
+          EOF
+
+          rm -f "$SSH_KEY_TEMP_FILE"
