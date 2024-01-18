@@ -5,11 +5,12 @@ services:
     container_name: client
     build:
       context: ./client
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=dev
+      - NEXTAUTH_SECRET=dev_secret_value
+    #  - NODE_ENV=development
     restart: always
     volumes:
       - ./client:/app
