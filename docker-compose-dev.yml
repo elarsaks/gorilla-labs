@@ -8,7 +8,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    # environment:
+    environment:
+      - NEXTAUTH_SECRET=dev_secret_value
     #  - NODE_ENV=development
     restart: always
     volumes:
