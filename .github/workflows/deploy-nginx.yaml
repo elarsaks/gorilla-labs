@@ -17,10 +17,10 @@ jobs:
         run: echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
 
       - name: Build Docker image
-        run: docker build -t elarsaks/gorilla-labs-client:${{ github.sha }} ./client
+        run: docker build -t elarsaks/gorilla-labs-nginx:${{ github.sha }} ./client
 
       - name: Push Docker image to Docker Hub
-        run: docker push elarsaks/gorilla-labs-client:${{ github.sha }}
+        run: docker push elarsaks/gorilla-labs-nginx:${{ github.sha }}
 
   deploy-to-ec2:
     needs: build-docker-image
@@ -34,14 +34,14 @@ jobs:
           username: ubuntu
           script: |
             echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
-            docker pull elarsaks/gorilla-labs-client:${{ github.sha }}
+            docker pull elarsaks/gorilla-labs-nginx:${{ github.sha }}
             # Check if the container is running and stop it
-            if docker ps -q -f name=gorilla-labs-client; then
-                docker stop gorilla-labs-client
+            if docker ps -q -f name=gorilla-labs-nginx; then
+                docker stop gorilla-labs-nginx
             fi
             # Check if the container exists and remove it
-            if docker ps -a -q -f name=gorilla-labs-client; then
-                docker rm gorilla-labs-client
+            if docker ps -a -q -f name=gorilla-labs-nginx; then
+                docker rm gorilla-labs-nginx
             fi
             # Run the new container with restart policy
-            docker run -d --restart=always --name gorilla-labs-client -p 3000:3000 elarsaks/gorilla-labs-client:${{ github.sha }}
+            docker run -d --restart=always --name gorilla-labs-nginx -p 3000:3000 elarsaks/gorilla-labs-nginx:${{ github.sha }}
