@@ -28,6 +28,23 @@ jobs:
           # Cleanup
           rm -f "$SSH_KEY_TEMP_FILE"
 
+      - name: Shutdown and Cleanup Docker Containers
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        run: |
+          SSH_KEY_TEMP_FILE=$(mktemp)
+          echo "$SSH_PRIVATE_KEY" > "$SSH_KEY_TEMP_FILE"
+          chmod 600 "$SSH_KEY_TEMP_FILE"
+
+          # Execute SSH command to shutdown containers and cleanup
+          ssh -o StrictHostKeyChecking=no -i "$SSH_KEY_TEMP_FILE" ubuntu@${{ secrets.EC2_HOST }} << EOF
+            cd /home/ubuntu
+            docker-compose -f docker-compose-prod.yml down
+            docker system prune -af
+          EOF
+
+          rm -f "$SSH_KEY_TEMP_FILE"
+
       - name: Copy Docker Compose file to EC2
         uses: appleboy/scp-action@master
         with:
@@ -37,3 +54,19 @@ jobs:
           port: 22
           source: "docker-compose-prod.yml"
           target: "/home/ubuntu"
+
+      - name: Build and Run Docker Compose on EC2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        run: |
+          SSH_KEY_TEMP_FILE=$(mktemp)
+          echo "$SSH_PRIVATE_KEY" > "$SSH_KEY_TEMP_FILE"
+          chmod 600 "$SSH_KEY_TEMP_FILE"
+
+          # Execute SSH command to build and run Docker Compose
+          ssh -o StrictHostKeyChecking=no -i "$SSH_KEY_TEMP_FILE" ubuntu@${{ secrets.EC2_HOST }} << EOF
+            cd /home/ubuntu
+            docker-compose -f docker-compose-prod.yml up --build -d
+          EOF
+
+          rm -f "$SSH_KEY_TEMP_FILE"
