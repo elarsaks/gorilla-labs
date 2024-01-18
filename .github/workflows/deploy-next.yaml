@@ -33,8 +33,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           username: ubuntu
           script: |
-            echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
-            docker pull elarsaks/gorilla-labs-client:${{ github.sha }}
-            docker stop gorilla-labs-client || true
-            docker rm gorilla-labs-client || true
-            docker run -d --name gorilla-labs-client -p 80:80 elarsaks/gorilla-labs-client:${{ github.sha }}
+            echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | sudo docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
+            sudo docker pull ***/gorilla-labs-client:${{ github.sha }}
+            sudo docker stop gorilla-labs-client || true
+            sudo docker rm gorilla-labs-client || true
+            sudo docker run -d --name gorilla-labs-client -p 80:80 ***/gorilla-labs-client:${{ github.sha }}
