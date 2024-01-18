@@ -50,28 +50,54 @@ resource "aws_instance" "gorilla_labs" {
   security_groups   = [aws_security_group.gorilla_labs_sg.name]
   key_name          = "gorilla-labs-deployer-key"
 
-
   user_data = <<-EOF
     #!/bin/bash
     # Update system packages
     sudo apt-get update
-    # Install unzip, Nginx, Node.js, and PostgreSQL
-    sudo apt-get install -y unzip nginx
-    curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    sudo apt-get install -y postgresql postgresql-contrib
 
-    # Create directories
-    sudo mkdir -p /home/ubuntu/nginx
-    sudo mkdir -p /home/ubuntu/nextjs
+    # Install Docker and Docker Compose
+    sudo apt-get install -y docker.io
+    sudo apt-get install -y docker-compose
 
-    # Setup Nginx configuration 
-    sudo ln -s /home/ubuntu/nginx/nginx.conf /etc/nginx/sites-enabled/
+    # Add docker to user group
+    sudo usermod -aG docker ubuntu
+
+    # Start and enable Docker service
+    sudo systemctl start docker
+    sudo systemctl enable docker
+
+    # Install Nginx
+    sudo apt-get install -y nginx
+
+    # Configure Nginx to forward requests to port 3000
+    sudo tee /etc/nginx/sites-available/your-app <<EOL
+    server {
+        listen 80;
+        server_name _;
+
+        location / {
+            proxy_pass http://localhost:3000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+
+        location /socket.io/ {
+            proxy_pass http://localhost:3000;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+    }
+    EOL
+
+    # Create a symbolic link to enable the site
+    sudo ln -s /etc/nginx/sites-available/your-app /etc/nginx/sites-enabled/
+
+    # Test Nginx configuration and restart Nginx
+    sudo nginx -t
     sudo systemctl restart nginx
-
-    # Start and enable Nginx service
-    sudo systemctl start nginx
-    sudo systemctl enable nginx
   EOF
 
   tags = {
@@ -79,6 +105,8 @@ resource "aws_instance" "gorilla_labs" {
     "Gorilla Labs" = "true"
   }
 }
+
+
 
 resource "aws_eip" "gorilla_labs_eip" {
   instance = aws_instance.gorilla_labs.id

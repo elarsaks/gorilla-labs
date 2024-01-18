@@ -1,4 +1,4 @@
-name: Deploy Next to EC2
+name: Build and Deploy Docker Image to EC2
 
 on:
   push:
@@ -6,73 +6,42 @@ on:
       - deploy-next
 
 jobs:
-  deploy:
+  build-docker-image:
     runs-on: ubuntu-latest
 
     steps:
-      # checkout the repository content to github runner.
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      # setup nodejs environment
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: "18.16.1"
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
 
-      # cache the dependencies to speed up the build
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ./client/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Build Docker image
+        run: docker build -t elarsaks/gorilla-labs-client:${{ github.sha }} ./client
 
-      # install dependencies
-      - name: Install dependencies
-        working-directory: ./client
-        run: npm install
+      - name: Push Docker image to Docker Hub
+        run: docker push elarsaks/gorilla-labs-client:${{ github.sha }}
 
-      # build the next app
-      - name: Build
-        working-directory: ./client
-        run: npm run build
-
-      # Package the Next.js application for deployment
-      - name: Package application
-        working-directory: ./client
-        run: |
-          zip -r ../deploy.zip .next package.json next.config.js public
-
-      # Validate SSH access to EC2 instance
-      - name: Validate SSH Access
-        uses: appleboy/ssh-action@master
+  deploy-to-ec2:
+    needs: build-docker-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Pull & Run From Hub
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          script: echo "SSH Connection Successful"
-
-      # Deploy to EC2 instance using SSH
-      - name: Deploy to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
           username: ubuntu
-          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          source: "deploy.zip"
-          target: "/home/ubuntu/nextjs"
-
-      # Execute deployment script on EC2 instance (optional)
-      - name: Execute deployment script
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
-            cd /home/ubuntu/nextjs
-            unzip deploy.zip
-            cd .next/standalone
-            node server.js
+            echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
+            docker pull elarsaks/gorilla-labs-client:${{ github.sha }}
+            # Check if the container is running and stop it
+            if docker ps -q -f name=gorilla-labs-client; then
+                docker stop gorilla-labs-client
+            fi
+            # Check if the container exists and remove it
+            if docker ps -a -q -f name=gorilla-labs-client; then
+                docker rm gorilla-labs-client
+            fi
+            # Run the new container with restart policy
+            docker run -d --restart=always --name gorilla-labs-client -p 3000:3000 elarsaks/gorilla-labs-client:${{ github.sha }}
