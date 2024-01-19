@@ -8,17 +8,20 @@ services:
       - "3000:3000"
     environment:
       - NEXTAUTH_SECRET=${NEXT_PRODUCTION_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXT_LINKEDIN_CLIENT_ID=${NEXT_LINKEDIN_CLIENT_ID}
+      - NEXT_LINKEDIN_CLIENT_SECRET=${NEXT_LINKEDIN_CLIENT_SECRET}
       - NODE_ENV=production
     restart: always
 
-  gorilla-labs-nginx:
-    container_name: gorilla-labs-nginx
-    image: elarsaks/gorilla-labs-nginx:763d89b4c0bf0652ebed1fcf480fb7af477440a6
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - gorilla-labs-client
-    restart: always
+  # gorilla-labs-nginx:
+  #   container_name: gorilla-labs-nginx
+  #   image: elarsaks/gorilla-labs-nginx:763d89b4c0bf0652ebed1fcf480fb7af477440a6
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+  #   depends_on:
+  #     - gorilla-labs-client
+  #   restart: always
