@@ -45,5 +45,11 @@ jobs:
             if docker ps -a -q -f name=gorilla-labs-nginx; then
                 docker rm gorilla-labs-nginx
             fi
-            # Run the new container with restart policy
-            docker run -d --restart=always --name gorilla-labs-nginx -p 80:80 -p 8080:8080 -p 443:443 elarsaks/gorilla-labs-nginx:${{ github.sha }}
+            # Run the new container with restart policy, connected to the network
+            docker run -d --restart=always \
+             --name gorilla-labs-nginx \
+             --network gorilla-labs-network \
+             -p 80:80 \
+             -p 8080:8080 \
+             -p 443:443 \
+             elarsaks/gorilla-labs-nginx:${{ github.sha }}

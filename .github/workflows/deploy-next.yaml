@@ -43,5 +43,9 @@ jobs:
             if docker ps -a -q -f name=gorilla-labs-client; then
                 docker rm gorilla-labs-client
             fi
-            # Run the new container with restart policy
-            docker run -d --restart=always --name gorilla-labs-client -p 3000:3000 elarsaks/gorilla-labs-client:${{ github.sha }}
+            # Run the new gorilla-labs-client container with restart policy, connected to the network
+            docker run -d --restart=always \
+                      --name gorilla-labs-client \
+                      --network gorilla-labs-network \
+                      -p 3000:3000 \
+                      elarsaks/gorilla-labs-client:${{ github.sha }}
