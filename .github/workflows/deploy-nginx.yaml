@@ -28,6 +28,17 @@ jobs:
     needs: build-nginx-image
     runs-on: ubuntu-latest
     steps:
+      - name: Decode and Transfer SSL Certificate
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          username: ubuntu
+          script: |
+            echo "${{ secrets.SSL_CERTIFICATE }}" | base64 -d > certificate.crt
+            echo "${{ secrets.SSL_KEY }}" | base64 -d > private.key
+            scp certificate.crt private.key ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu
+
       - name: Docker Pull & Run From Hub
         uses: appleboy/ssh-action@v1.0.3
         with:
