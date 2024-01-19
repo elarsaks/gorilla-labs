@@ -41,7 +41,7 @@ jobs:
             # Decode and transfer SSL certificate and key
             echo "${{ secrets.SSL_CERTIFICATE }}" | base64 -d > certificate.crt
             echo "${{ secrets.SSL_KEY }}" | base64 -d > private.key
-            sudo scp certificate.crt private.key ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu
+            scp certificate.crt private.key ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu
 
       - name: Docker Pull & Run From Hub
         uses: appleboy/ssh-action@v1.0.3
