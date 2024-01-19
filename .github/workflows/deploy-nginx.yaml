@@ -35,6 +35,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           username: ubuntu
           script: |
+            # TODO: Deploying certs on machine fails
             # Disable host key checking for this SSH session
             echo "StrictHostKeyChecking=no" >> ~/.ssh/config
 
@@ -67,4 +68,5 @@ jobs:
              -p 80:80 \
              -p 8080:8080 \
              -p 443:443 \
+             -v /home/ubuntu/ssl:/etc/nginx/ssl \
              elarsaks/gorilla-labs-nginx:${{ github.sha }}
