@@ -13,8 +13,6 @@ More to come...
 
 # TODO: Write a proper ReadMe
 
-# SSL keys are created with cert-bot and converted to base64 before passing to Github Secrets
-
 # Installation and running
 
 **Installation:**
