@@ -73,6 +73,9 @@ resource "aws_instance" "gorilla_labs" {
     # Start and enable Docker service
     sudo systemctl start docker
     sudo systemctl enable docker
+
+    # Create network in docker
+    docker network create gorilla-labs-network
   EOF
 
   tags = {
