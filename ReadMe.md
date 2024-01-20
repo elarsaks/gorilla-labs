@@ -11,8 +11,7 @@ This is an NFT marketplace developed using Next.js and TypeScript.
 I am building it whithout planning, just exploring like doodling.  
 More to come...
 
-**_The purpose of this project:_**  
-The goal is to gain experience with Next JS.
+# TODO: Write a proper ReadMe
 
 # Installation and running
 
