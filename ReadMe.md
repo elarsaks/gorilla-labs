@@ -1,7 +1,7 @@
 [![Live Example](https://github.com/elarsaks/gorilla-labs/blob/main/client/public/assets/logo.png)](https://gorilla-labs-sandbox.org/)
 
 <h3 align="center">
-  <a href="https://gorilla-labs-sandbox.org/">Live Example</a>
+  <a href="https://gorilla-labs.com/">Live Example</a>
 </h3>
 
 # About
