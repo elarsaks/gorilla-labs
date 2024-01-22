@@ -45,7 +45,8 @@ jobs:
             fi
             # Run the new gorilla-labs-client container with restart policy, connected to the network
             docker run -d --restart=always \
-                      --name gorilla-labs-client \
-                      --network gorilla-labs-network \
-                      -p 3000:3000 \
-                      elarsaks/gorilla-labs-client:${{ github.sha }}
+              --name gorilla-labs-client \
+              --network gorilla-labs-network \
+              -p 3000:3000 \
+              -e NEXTAUTH_URL=https://gorilla-labs.com \
+              elarsaks/gorilla-labs-client:${{ github.sha }}
