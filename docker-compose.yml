@@ -9,7 +9,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NEXTAUTH_SECRET=${NEXT_PRODUCTION_SECRET}
+      - NEXT_PRODUCTION_SECRET=${NEXT_PRODUCTION_SECRET}
       - NEXTAUTH_URL=${NEXTAUTH_URL}
       - NEXT_LINKEDIN_CLIENT_ID=${NEXT_LINKEDIN_CLIENT_ID}
       - NEXT_LINKEDIN_CLIENT_SECRET=${NEXT_LINKEDIN_CLIENT_SECRET}
@@ -17,6 +17,8 @@ services:
     volumes:
       - ./client:/app
       - ./client/node_modules:/app/node_modules
+    networks:
+      - gorilla-net
 
   gorilla-labs-nginx:
     image: nginx:alpine
@@ -29,4 +31,11 @@ services:
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./keys:/etc/nginx/ssl
     restart: always
+    networks:
+      - gorilla-net
+
+networks:
+  gorilla-net:
+    driver: bridge
