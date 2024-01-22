@@ -38,3 +38,4 @@ crash.log
 # Keys
 *.pem
 *.key
+*.crt
