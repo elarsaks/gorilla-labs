@@ -13,21 +13,20 @@ services:
       - NEXTAUTH_URL=${NEXTAUTH_URL}
       - NEXT_LINKEDIN_CLIENT_ID=${NEXT_LINKEDIN_CLIENT_ID}
       - NEXT_LINKEDIN_CLIENT_SECRET=${NEXT_LINKEDIN_CLIENT_SECRET}
-    #  - NODE_ENV="development"
     restart: always
     volumes:
       - ./client:/app
       - ./client/node_modules:/app/node_modules
 
-  # gorilla-labs-nginx:
-  #   image: nginx:alpine
-  #   container_name: gorilla-labs-nginx
-  #   build:
-  #     context: ./nginx
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-  #   restart: always
+  gorilla-labs-nginx:
+    image: nginx:alpine
+    container_name: gorilla-labs-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    restart: always
