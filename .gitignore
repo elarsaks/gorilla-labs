@@ -37,3 +37,4 @@ crash.log
 
 # Keys
 *.pem
+*.key
