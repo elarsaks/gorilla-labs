@@ -48,5 +48,5 @@ jobs:
               --name gorilla-labs-client \
               --network gorilla-labs-network \
               -p 3000:3000 \
-              -e NEXTAUTH_URL=https://gorilla-labs.com \
+              -e NEXTAUTH_URL=https://gorilla-labs.com/api/auth/callback/linkedin \
               elarsaks/gorilla-labs-client:${{ github.sha }}
