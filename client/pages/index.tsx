@@ -1,6 +1,7 @@
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+
 import React from "react";
 import styled from "styled-components";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 const PageContainer = styled.div`
   position: absolute;
@@ -56,7 +57,7 @@ const SocialLink = styled.a`
 const Home = () => {
   return (
     <PageContainer>
-      <StyledImage src="/assets/logo.png" alt="Logo" />
+      <StyledImage src="/assets/logo.webp" alt="Logo" />
 
       <ContentContainer>
         <SocialLinks>

@@ -88,7 +88,7 @@ const MenuBar: React.FC = () => {
       <NavBar>
         <LogoAndButtons>
           <Logo onClick={handleLogoClick}>
-            <img src="/assets/logo.png" alt="Gorilla Labs" />
+            <img src="/assets/logo.webp" alt="Gorilla Labs" />
           </Logo>
 
           <NavButton
