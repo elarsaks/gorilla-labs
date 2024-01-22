@@ -1,4 +1,4 @@
-[![Live Example](https://github.com/elarsaks/gorilla-labs/blob/main/client/public/assets/logo.png)](https://gorilla-labs-sandbox.org/)
+[![Live Example](https://github.com/elarsaks/gorilla-labs/blob/main/client/public/assets/logo.png)](https://gorilla-labs.com/)
 
 <h3 align="center">
   <a href="https://gorilla-labs.com/">Live Example</a>
