@@ -17,7 +17,6 @@ const PageContainer = styled.div`
 
 const ContentContainer = styled.div`
   text-align: center;
-  // Add more styles for your content container as needed
 `;
 
 const StyledImage = styled.img`
