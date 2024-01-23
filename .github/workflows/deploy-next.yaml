@@ -49,4 +49,5 @@ jobs:
               --network gorilla-labs-network \
               -p 3000:3000 \
               -e NEXTAUTH_URL=https://gorilla-labs.com/api/auth/callback/linkedin \
+              -e NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} \
               elarsaks/gorilla-labs-client:${{ github.sha }}
