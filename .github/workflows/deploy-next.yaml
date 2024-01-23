@@ -48,7 +48,7 @@ jobs:
               --name gorilla-labs-client \
               --network gorilla-labs-network \
               -p 3000:3000 \
-              -e NEXTAUTH_URL=https://gorilla-labs.com/api/auth/callback/linkedin \
+              -e NEXTAUTH_URL=https://gorilla-labs.com/api/auth/ \
               -e NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} \
               -e NEXT_LINKEDIN_CLIENT_ID=${{ secrets.NEXT_LINKEDIN_CLIENT_ID }} \
               -e NEXT_LINKEDIN_CLIENT_SECRET=${{ secrets.NEXT_LINKEDIN_CLIENT_SECRET }} \
