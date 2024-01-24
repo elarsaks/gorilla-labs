@@ -52,7 +52,7 @@ export const Icons = styled.div`
 const MenuBar: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, } = useSession();
 
   useEffect(() => {
     setIsClient(true);
@@ -62,26 +62,17 @@ const MenuBar: React.FC = () => {
     return null;
   }
 
-  const handleLogoClick = () => {
-    router.push("/");
-  };
-
-  const navigateToMarketplace = () => {
-    router.push("/marketplace"); // Update this with your actual marketplace route
-  };
-
-  const navigateToCreate = () => {
-    router.push("/create"); // Update this with your actual create route
-  };
+  const handleLogoClick = () => router.push("/");
+  const navigateToMarketplace = () => router.push("/marketplace");
 
   const handleAuthClick = () => {
     if (session) {
-      signOut({ callbackUrl: '/' });
+      console.log(session)
+      router.push('/profile');
     } else {
       signIn('linkedin', { callbackUrl: '/' });
     }
   };
-
 
   return (
     <>
@@ -97,17 +88,17 @@ const MenuBar: React.FC = () => {
             onClick={navigateToMarketplace}
           />
 
-          <NavButton
+          {/* <NavButton
             icon={<FaPlus />}
             text={"CREATE"}
             onClick={navigateToCreate}
             marginleft="0px"
-          />
+          /> */}
         </LogoAndButtons>
 
         <NavButton
           icon={<FaUser />}
-          text={session ? 'Log Out' : 'Log In'}
+          text={session?.user?.name || 'Log In'}
           onClick={handleAuthClick}
           marginright="2em"
         />

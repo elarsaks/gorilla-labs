@@ -9,6 +9,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      - WATCHPACK_POLLING=true
       - NEXTAUTH_URL=${NEXTAUTH_URL}
       - NEXT_LINKEDIN_CLIENT_ID=${NEXT_LINKEDIN_CLIENT_ID}
       - NEXT_LINKEDIN_CLIENT_SECRET=${NEXT_LINKEDIN_CLIENT_SECRET}
@@ -22,9 +23,6 @@ services:
   gorilla-labs-nginx:
     image: nginx:alpine
     container_name: gorilla-labs-nginx
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
     ports:
       - "80:80"
       - "443:443"
