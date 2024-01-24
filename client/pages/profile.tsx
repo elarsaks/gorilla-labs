@@ -51,6 +51,8 @@ const Profile = () => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
+  console.log(session)
+
   return (
     <PageContainer>
       <GridContainer>

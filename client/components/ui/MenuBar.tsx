@@ -68,14 +68,11 @@ const MenuBar: React.FC = () => {
   const handleAuthClick = () => {
     if (session) {
       console.log(session)
-      //  signOut({ callbackUrl: '/' });
+      router.push('/profile');
     } else {
       signIn('linkedin', { callbackUrl: '/' });
     }
   };
-
-  //  const authButtonText = session ? session.user.name : 'Log In'
-
 
   return (
     <>
@@ -101,7 +98,7 @@ const MenuBar: React.FC = () => {
 
         <NavButton
           icon={<FaUser />}
-          text={session && session.user ? session.user.name : 'Log In'}
+          text={session?.user?.name || 'Log In'}
           onClick={handleAuthClick}
           marginright="2em"
         />
