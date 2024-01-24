@@ -1,16 +1,16 @@
+import NFTCard from "../components/ui/NFTCard";
 import React from "react";
 import styled from "styled-components";
-import NFTCard from "../components/ui/NFTCard";
 
 const images = [
-  "beach.png",
-  "diving.png",
-  "meditation.png",
-  "muay_thai.png",
-  "party.png",
-  "pantheon.png",
-  "rome.png",
-  "tech_lab.png",
+  "beach",
+  "diving",
+  "meditation",
+  "muay_thai",
+  "party",
+  "pantheon",
+  "rome",
+  "tech_lab",
 ];
 
 const PageContainer = styled.div`
@@ -55,7 +55,7 @@ const MarketPlace = () => {
         {[...images,].map((image, index) => (
           <NFTCard
             key={index}
-            image={`/assets/nft-images/${image}`}
+            image={`/assets/nft-images-webp/${image}.webp`}
             name={capitalize(image.split(".")[0])}
             description={`This is a description of the ${image} NFT.`}
             network="Ethereum"

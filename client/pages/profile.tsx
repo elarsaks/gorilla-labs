@@ -4,14 +4,14 @@ import styled from "styled-components";
 import { useSession } from 'next-auth/react';
 
 const images = [
-  "beach.png",
-  "diving.png",
-  "meditation.png",
-  "muay_thai.png",
-  "party.png",
-  "pantheon.png",
-  "rome.png",
-  "tech_lab.png",
+  "beach",
+  "diving",
+  "meditation",
+  "muay_thai",
+  "party",
+  "pantheon",
+  "rome",
+  "tech_lab",
 ];
 
 const PageContainer = styled.div`
@@ -58,7 +58,7 @@ const Profile = () => {
         {[...images,].map((image, index) => (
           <NFTCard
             key={index}
-            image={`/assets/nft-images/${image}`}
+            image={`/assets/nft-images-webp/${image}.webp`}
             name={capitalize(image.split(".")[0])}
             description={`This is a description of the ${image} NFT.`}
             network="Ethereum"
