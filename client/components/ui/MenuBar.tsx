@@ -70,7 +70,7 @@ const MenuBar: React.FC = () => {
       console.log(session)
       router.push('/profile');
     } else {
-      signIn('linkedin', { callbackUrl: '/' });
+      signIn('linkedin', { callbackUrl: '/profile' });
     }
   };
 

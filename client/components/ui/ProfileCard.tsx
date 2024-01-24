@@ -76,7 +76,7 @@ const NFTCard: React.FC<ProfileCardProps> = ({
       .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
 
-  const logOut = () => signOut(/* { callbackUrl: 'http://localhost:3000/marketplace' } */);
+  const logOut = () => signOut({ callbackUrl: '/' });
 
   return (
     <Card>
