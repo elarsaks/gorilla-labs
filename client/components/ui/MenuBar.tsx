@@ -86,6 +86,7 @@ const MenuBar: React.FC = () => {
             icon={<FaStore />}
             text={"MARKETPLACE"}
             onClick={navigateToMarketplace}
+            hideTextOnMobile={true}
           />
 
           {/* <NavButton
@@ -100,6 +101,7 @@ const MenuBar: React.FC = () => {
           icon={<FaUser />}
           text={session?.user?.name || 'Log In'}
           onClick={handleAuthClick}
+          hideTextOnMobile={true}
           marginright="2em"
         />
 

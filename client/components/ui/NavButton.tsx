@@ -5,12 +5,17 @@ import styled from "styled-components";
 interface NavButtonProps {
   icon: ReactNode;
   text: string;
+  hideTextOnMobile: boolean;
   marginleft?: string;
   marginright?: string;
   onClick: () => void;
 }
 
-const StyledButton = styled.button<{ marginleft?: string; marginright?: string }>`
+const StyledButton = styled.button<{
+  marginleft?: string;
+  marginright?: string;
+  hideTextOnMobile: boolean;
+}>`
   background: transparent;
   border: none;
   color: white;
@@ -26,6 +31,11 @@ const StyledButton = styled.button<{ marginleft?: string; marginright?: string }
 
   span {
     margin-left: 0.5rem;
+    ${(props) => props.hideTextOnMobile && `
+      @media (max-width: 768px) {
+        display: none;
+      }
+    `}
   }
 
   &:hover {
@@ -35,17 +45,18 @@ const StyledButton = styled.button<{ marginleft?: string; marginright?: string }
       color: aqua;
     }
   }
-
-  @media (max-width: 768px) {
-    span {
-      display: none;
-    }
-  }
 `;
 
-export const NavButton: React.FC<NavButtonProps> = ({ icon, text, marginleft, marginright, onClick }) => {
+export const NavButton: React.FC<NavButtonProps> = ({
+  icon, text, hideTextOnMobile, marginleft, marginright, onClick
+}) => {
   return (
-    <StyledButton onClick={onClick} marginleft={marginleft} marginright={marginright}>
+    <StyledButton
+      onClick={onClick}
+      marginleft={marginleft}
+      marginright={marginright}
+      hideTextOnMobile={hideTextOnMobile}
+    >
       {icon}
       <span>{text}</span>
     </StyledButton>

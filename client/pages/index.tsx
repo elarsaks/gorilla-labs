@@ -1,7 +1,10 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaPlus, FaStore, FaUser } from "react-icons/fa";
 
+import { NavButton } from '../components/ui/NavButton'
 import React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const PageContainer = styled.div`
   position: absolute;
@@ -15,67 +18,96 @@ const PageContainer = styled.div`
   align-items: center;
 `;
 
-const ContentContainer = styled.div`
-  text-align: center;
-`;
+
 
 const StyledImage = styled.img`
   max-width: 700px;
   max-height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 2vh;
 
   @media (max-width: 768px) {
     max-width: 70%;
     max-height: 50%;
   }
 `;
-const SocialLinks = styled.div`
+
+const TxtContainer = styled.div`
   margin-top: 0px;
   display: flex;
   justify-content: center;
   gap: 50px;
   background: rgba(0, 0, 0, 0.3);
   padding: 0.5rem 2rem;
-  // Make corners rounded
 
   border-radius: 50px;
 `;
 
-const SocialLink = styled.a`
-  color: #ffffff;
 
-  &:hover {
-    color: #f9a825;
-    // Scale slowly on hover
-    transform: scale(1.1);
-    transition: transform 0.5s;
-    scale: 1.2;
-  }
-`;
 
 const Home = () => {
+  const router = useRouter();
+  const navigateToMarketplace = () => router.push("/marketplace");
+
   return (
     <PageContainer>
       <StyledImage src="/assets/logo.webp" alt="Logo" />
 
-      <ContentContainer>
-        <SocialLinks>
-          <SocialLink
-            href="https://www.linkedin.com/in/elarsaks/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaLinkedin size="50" />
-          </SocialLink>
-          <SocialLink
-            href="https://github.com/elarsaks/gorilla-labs"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaGithub size="50" />
-          </SocialLink>
-        </SocialLinks>
-      </ContentContainer>
+      <TxtContainer>
+        <NavButton
+          icon={<FaStore />}
+          text={"MARKETPLACE"}
+          onClick={navigateToMarketplace}
+          marginleft="0px"
+          marginright="0px"
+          hideTextOnMobile={false}
+        />
+
+        <NavButton
+          icon={<FaUser />}
+          text={"LOG IN"}
+          onClick={() => { }}
+          marginleft="0px"
+          marginright="0px"
+          hideTextOnMobile={false}
+        />
+      </TxtContainer>
+      <br></br>
+
+      <TxtContainer>
+        <NavButton
+          icon={''}
+          text={"🚧 UNDER DEVELOPMENT 🚧"}
+          onClick={() => { }}
+          marginleft="0px"
+          marginright="0px"
+          hideTextOnMobile={false}
+        />
+      </TxtContainer>
+
+      <br></br>
+      <TxtContainer>
+        <NavButton
+          icon={<FaGithub />}
+          text={"Source Code"}
+          onClick={() => { }}
+          marginleft="0px"
+          marginright="0px"
+          hideTextOnMobile={false}
+        />
+      </TxtContainer>
+
+      <br></br>
+      <TxtContainer>
+        <NavButton
+          icon={<FaLinkedin />}
+          text={"Author"}
+          onClick={() => { }}
+          marginleft="0px"
+          marginright="0px"
+          hideTextOnMobile={false}
+        />
+      </TxtContainer>
+
     </PageContainer>
   );
 };
