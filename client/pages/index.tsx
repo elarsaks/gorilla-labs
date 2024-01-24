@@ -48,6 +48,17 @@ const Home = () => {
   const router = useRouter();
   const navigateToMarketplace = () => router.push("/marketplace");
 
+  function openInNewTab(url: string): void {
+    // Check if the URL is non-empty and a valid URL
+    if (url) {
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+      if (newWindow) newWindow.opener = null;
+    } else {
+      console.error('Invalid URL');
+    }
+  }
+
+
   return (
     <PageContainer>
       <StyledImage src="/assets/logo.webp" alt="Logo" />
@@ -89,7 +100,7 @@ const Home = () => {
         <NavButton
           icon={<FaGithub />}
           text={"Source Code"}
-          onClick={() => { }}
+          onClick={() => openInNewTab('https://www.linkedin.com/in/elarsaks/')}
           marginleft="0px"
           marginright="0px"
           hideTextOnMobile={false}
@@ -101,7 +112,7 @@ const Home = () => {
         <NavButton
           icon={<FaLinkedin />}
           text={"Author"}
-          onClick={() => { }}
+          onClick={() => openInNewTab('https://github.com/elarsaks')}
           marginleft="0px"
           marginright="0px"
           hideTextOnMobile={false}
