@@ -1,5 +1,6 @@
 import { signOut, useSession } from "next-auth/react";
 
+import CustomConnectButton from "@/components/shared/CustomConnectButton";
 import NFTCard from "../components/shared/NFTCard";
 import React from "react";
 import styled from "styled-components";
@@ -90,7 +91,7 @@ const Profile = () => {
         <ProfileImage src={session?.user?.image || ""} alt={"img"} />
         <ButtonContainer>
           <Button color="#ffffff">{session?.user?.name || "User Name"}</Button>
-          <Button color="#078dfa">Connect Wallet</Button>
+          <CustomConnectButton /> {/* //TODO: Fix this component naming*/}
           <Button color="#fc324a" onClick={logOut}>Log Out!</Button>
         </ButtonContainer>
       </PageContentHeader>
