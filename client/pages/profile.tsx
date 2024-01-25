@@ -1,5 +1,4 @@
 import NFTCard from "../components/shared/NFTCard";
-import ProfileCard from "../components/ProfileCard";
 import React from "react";
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
@@ -93,7 +92,7 @@ const GridContainer = styled.div`
 
 const Profile = () => {
   const { data: session } = useSession();
-
+  
   function capitalize(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -112,13 +111,18 @@ const Profile = () => {
       </PageContentHeader>
 
       <GridContainer>
-        {/* <ProfileCard
-          image={session?.user?.image || ""}
-          name={session?.user?.name || ""}
-        /> */}
+        <NFTCard
+          type={'CREATE'}
+          image={``}
+          name={'Create'}
+          description={`This is a description of the  NFT.`}
+          network="Ethereum"
+          price="0.05 ETH"
+        />
 
         {[...images].map((image, index) => (
           <NFTCard
+            type={'EXISTING'}
             key={index}
             image={`/assets/nft-images-webp/${image}.webp`}
             name={capitalize(image.split(".")[0])}
