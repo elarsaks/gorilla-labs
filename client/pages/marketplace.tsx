@@ -1,6 +1,7 @@
-import LoadingCube from "../components/shared/LoadingCube"
+import React, { useEffect, useState } from "react";
+
+import LoadingCube from "../components/shared/LoadingCube";
 import NFTCard from "../components/shared/NFTCard";
-import React from "react";
 import styled from "styled-components";
 
 const PageContent = styled.div`
@@ -44,28 +45,37 @@ const images = [
   "rome",
   "tech_lab",
 ];
-
 const MarketPlace = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   function capitalize(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2000); // 2 seconds delay
+    return () => clearTimeout(timer); // Clear the timer if the component unmounts
+  }, []);
 
   return (
     <PageContent>
       <GridContainer>
         <PageContentHeader>Marketplace</PageContentHeader>
-        <LoadingCube height="400px"></LoadingCube>
-        {[...images,].map((image, index) => (
-          <NFTCard
-            type='EXISTING'
-            key={index}
-            image={`/assets/nft-images-webp/${image}.webp`}
-            name={capitalize(image.split(".")[0])}
-            description={`This is a description of the ${image} NFT.`}
-            network="Ethereum"
-            price="0.05 ETH"
-          />
-        ))}
+        {isLoading ? (
+          <LoadingCube height="400px" />
+        ) : (
+          images.map((image, index) => (
+            <NFTCard
+              type='EXISTING'
+              key={index}
+              image={`/assets/nft-images-webp/${image}.webp`}
+              name={capitalize(image.split(".")[0])}
+              description={`This is a description of the ${image} NFT.`}
+              network="Ethereum"
+              price="0.05 ETH"
+            />
+          ))
+        )}
       </GridContainer>
     </PageContent>
   );
