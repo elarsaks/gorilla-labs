@@ -25,6 +25,7 @@ const PageContent = styled.div`
   border: 1px solid white;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.5); 
+  min-width:70vw;
 
   // Hide scrollbar for Webkit browsers
   &::-webkit-scrollbar {
@@ -92,7 +93,7 @@ const GridContainer = styled.div`
 
 const Profile = () => {
   const { data: session } = useSession();
-  
+
   function capitalize(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -120,7 +121,7 @@ const Profile = () => {
           price="0.05 ETH"
         />
 
-        {[...images].map((image, index) => (
+        {/* {[...images].map((image, index) => (
           <NFTCard
             type={'EXISTING'}
             key={index}
@@ -130,7 +131,7 @@ const Profile = () => {
             network="Ethereum"
             price="0.05 ETH"
           />
-        ))}
+        ))} */}
       </GridContainer>
     </PageContent >
   );

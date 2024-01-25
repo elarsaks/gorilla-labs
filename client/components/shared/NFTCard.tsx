@@ -19,6 +19,7 @@ const Card = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: scale 0.7s;
   color: #ffffff;
+  min-height: 350px;
 
   &:hover {
     color: aqua;
