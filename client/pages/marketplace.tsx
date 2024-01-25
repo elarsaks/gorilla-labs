@@ -22,6 +22,8 @@ const PageContainer = styled.div`
   width: 98vw;
   padding-bottom: 5vh;
   padding-top: 5vh;
+  margin-left: auto;
+  margin-right: auto;
 
   // Hide scrollbar for Webkit browsers
   &::-webkit-scrollbar {
@@ -36,12 +38,16 @@ const StyledHeader = styled.h1`
 `;
 
 const GridContainer = styled.div`
+  margin-top: 50px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-template-rows: auto 1fr; // Define rows, one for the header and one for the content
-  gap: 1.5rem;
+  grid-gap: 1.5rem;
   padding: 1rem;
+  border: 1px solid white;
+  border-radius: 8px; 
+  background-color: rgba(0, 0, 0, 0.5); 
 `;
+
 
 const MarketPlace = () => {
   function capitalize(str: string) {

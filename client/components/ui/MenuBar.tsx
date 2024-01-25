@@ -20,6 +20,7 @@ export const NavBar = styled.nav`
   height: 50px;
   z-index: 1000;
   font-family: Arial, sans-serif;
+  border-bottom: 1px solid white;
 `;
 
 export const LogoAndButtons = styled.div`

@@ -37,7 +37,7 @@ const TxtContainer = styled.div`
   gap: 50px;
   background: rgba(0, 0, 0, 0.3);
   padding: 0.5rem 2rem;
-
+  border: 1px solid white;
   border-radius: 50px;
 `;
 
