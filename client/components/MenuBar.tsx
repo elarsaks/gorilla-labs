@@ -2,7 +2,7 @@ import { FaPlus, FaStore, FaUser } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from 'next-auth/react';
 
-import { NavButton } from './NavButton'
+import { NavButton } from './shared/NavButton'
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -20,6 +20,7 @@ export const NavBar = styled.nav`
   height: 50px;
   z-index: 1000;
   font-family: Arial, sans-serif;
+  border-bottom: 1px solid white;
 `;
 
 export const LogoAndButtons = styled.div`

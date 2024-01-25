@@ -1,10 +1,12 @@
 // pages/_app.tsx
-import { AppProps } from 'next/app';
-import { SessionProvider } from 'next-auth/react';
+
 import { ReactElement, ReactNode } from 'react';
+
+import { AppProps } from 'next/app';
+import Layout from '@/components/shared/Layout';
 import { NextPage } from 'next';
 import { Session } from 'next-auth';
-import Layout from '@/components/ui/Layout';
+import { SessionProvider } from 'next-auth/react';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

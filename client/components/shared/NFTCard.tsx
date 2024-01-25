@@ -1,12 +1,14 @@
-// NFTCard.js
+import { on } from "events";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 interface NFTCardProps {
+  description: string;
   image: string;
   name: string;
-  description: string;
   network: string;
   price: string;
+  type: string; //TODO: Use ENUM-s
 }
 
 const Card = styled.div`
@@ -26,6 +28,15 @@ const Card = styled.div`
     cursor: pointer;
     scale: 1.05;
   }
+`;
+
+const CreateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
 `;
 
 const Image = styled.img`
@@ -63,23 +74,38 @@ const Price = styled.div`
 `;
 
 const NFTCard: React.FC<NFTCardProps> = ({
+  description,
   image,
   name,
-  description,
   network,
   price,
+  type = 'EXISTING',
 }) => {
+  const router = useRouter();
+  const onClickCreate = () => router.push("/create");
+  // TODO: onClickNFT
+
   return (
     <Card>
-      <Image src={image} alt={name} />
-      <Info>
-        <Name>{name}</Name>
-        <Description>{description}</Description>
-        <Network>{network}</Network>
-        <Price>{price}</Price>
-      </Info>
+      {type === 'CREATE' ? (
+        <CreateContainer onClick={onClickCreate}>
+          <h1>+</h1>
+          <h3>Create NFT</h3>
+        </CreateContainer>
+      ) : (
+        <div>
+          <Image src={image} alt={name} />
+          <Info>
+            <Name>{name}</Name>
+            <Description>{description}</Description>
+            <Network>{network}</Network>
+            <Price>{price}</Price>
+          </Info>
+        </div>
+      )}
     </Card>
   );
 };
+
 
 export default NFTCard;

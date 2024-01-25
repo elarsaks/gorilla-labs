@@ -1,7 +1,7 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaPlus, FaStore, FaUser } from "react-icons/fa";
 
-import { NavButton } from "../components/ui/NavButton";
+import { NavButton } from "../components/shared/NavButton";
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -37,7 +37,7 @@ const TxtContainer = styled.div`
   gap: 50px;
   background: rgba(0, 0, 0, 0.3);
   padding: 0.5rem 2rem;
-
+  border: 1px solid white;
   border-radius: 50px;
 `;
 
