@@ -61,10 +61,13 @@ const MarketPlace = () => {
     <PageContent>
       <GridContainer>
         <PageContentHeader>Marketplace</PageContentHeader>
-        {isLoading ? (
-          <LoadingCube height="400px" />
-        ) : (
-          images.map((image, index) => (
+        <div style={{ height: '100%' }}>
+          <LoadingCube height="300px" />
+          <h3 style={{ color: 'orange' }}>🚧 UNDER DEVELOPMENT 🚧</h3>
+        </div>
+
+        {
+          images.map((image, index) =>
             <NFTCard
               type='EXISTING'
               key={index}
@@ -74,8 +77,7 @@ const MarketPlace = () => {
               network="Ethereum"
               price="0.05 ETH"
             />
-          ))
-        )}
+          )}
       </GridContainer>
     </PageContent>
   );
