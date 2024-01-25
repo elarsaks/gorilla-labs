@@ -1,18 +1,8 @@
+import { signOut, useSession } from "next-auth/react";
+
 import NFTCard from "../components/shared/NFTCard";
 import React from "react";
 import styled from "styled-components";
-import { useSession } from "next-auth/react";
-
-const images = [
-  "beach",
-  "diving",
-  "meditation",
-  "muay_thai",
-  "party",
-  "pantheon",
-  "rome",
-  "tech_lab",
-];
 
 const PageContent = styled.div`
   margin-left: auto;
@@ -64,7 +54,6 @@ const ButtonContainer = styled.div`
   }
 `;
 
-
 const Button = styled.button<{
   color: string;
 }>`
@@ -93,10 +82,7 @@ const GridContainer = styled.div`
 
 const Profile = () => {
   const { data: session } = useSession();
-
-  function capitalize(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+  const logOut = () => signOut({ callbackUrl: '/' })
 
   return (
     <PageContent>
@@ -105,10 +91,8 @@ const Profile = () => {
         <ButtonContainer>
           <Button color="#ffffff">{session?.user?.name || "User Name"}</Button>
           <Button color="#078dfa">Connect Wallet</Button>
-          <Button color="#fc324a" onClick={() => { }}>Log Out!</Button>
+          <Button color="#fc324a" onClick={logOut}>Log Out!</Button>
         </ButtonContainer>
-
-
       </PageContentHeader>
 
       <GridContainer>
@@ -120,18 +104,6 @@ const Profile = () => {
           network="Ethereum"
           price="0.05 ETH"
         />
-
-        {/* {[...images].map((image, index) => (
-          <NFTCard
-            type={'EXISTING'}
-            key={index}
-            image={`/assets/nft-images-webp/${image}.webp`}
-            name={capitalize(image.split(".")[0])}
-            description={`This is a description of the ${image} NFT.`}
-            network="Ethereum"
-            price="0.05 ETH"
-          />
-        ))} */}
       </GridContainer>
     </PageContent >
   );
