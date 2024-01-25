@@ -1,3 +1,4 @@
+import LoadingCube from "../components/shared/LoadingCube"
 import NFTCard from "../components/shared/NFTCard";
 import React from "react";
 import styled from "styled-components";
@@ -53,6 +54,7 @@ const MarketPlace = () => {
     <PageContent>
       <GridContainer>
         <PageContentHeader>Marketplace</PageContentHeader>
+        <LoadingCube height="400px"></LoadingCube>
         {[...images,].map((image, index) => (
           <NFTCard
             type='EXISTING'
