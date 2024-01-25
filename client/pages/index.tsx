@@ -1,10 +1,11 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaPlus, FaStore, FaUser } from "react-icons/fa";
 
-import { NavButton } from '../components/ui/NavButton'
+import { NavButton } from "../components/ui/NavButton";
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useSession } from 'next-auth/react';
 
 const PageContainer = styled.div`
   position: absolute;
@@ -17,8 +18,6 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-
 
 const StyledImage = styled.img`
   max-width: 700px;
@@ -42,11 +41,20 @@ const TxtContainer = styled.div`
   border-radius: 50px;
 `;
 
-
-
 const Home = () => {
   const router = useRouter();
+  const { data: session, } = useSession();
+
   const navigateToMarketplace = () => router.push("/marketplace");
+
+  function openInNewTab(url: string): void {
+    if (url) {
+      const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+      if (newWindow) newWindow.opener = null;
+    } else {
+      console.error("Invalid URL");
+    }
+  }
 
   return (
     <PageContainer>
@@ -64,7 +72,7 @@ const Home = () => {
 
         <NavButton
           icon={<FaUser />}
-          text={"LOG IN"}
+          text={session?.user?.name || 'Log in'}
           onClick={() => { }}
           marginleft="0px"
           marginright="0px"
@@ -75,7 +83,7 @@ const Home = () => {
 
       <TxtContainer>
         <NavButton
-          icon={''}
+          icon={""}
           text={"🚧 UNDER DEVELOPMENT 🚧"}
           onClick={() => { }}
           marginleft="0px"
@@ -89,7 +97,7 @@ const Home = () => {
         <NavButton
           icon={<FaGithub />}
           text={"Source Code"}
-          onClick={() => { }}
+          onClick={() => openInNewTab("https://github.com/elarsaks")}
           marginleft="0px"
           marginright="0px"
           hideTextOnMobile={false}
@@ -101,13 +109,12 @@ const Home = () => {
         <NavButton
           icon={<FaLinkedin />}
           text={"Author"}
-          onClick={() => { }}
+          onClick={() => openInNewTab("https://www.linkedin.com/in/elarsaks/")}
           marginleft="0px"
           marginright="0px"
           hideTextOnMobile={false}
         />
       </TxtContainer>
-
     </PageContainer>
   );
 };
