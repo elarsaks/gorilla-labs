@@ -55,6 +55,7 @@ const MarketPlace = () => {
         <PageContentHeader>Marketplace</PageContentHeader>
         {[...images,].map((image, index) => (
           <NFTCard
+            type='EXISTING'
             key={index}
             image={`/assets/nft-images-webp/${image}.webp`}
             name={capitalize(image.split(".")[0])}
