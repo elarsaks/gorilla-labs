@@ -24,6 +24,22 @@ const StyledButton = styled.button`
   }
 `;
 
+const Button = styled.button`
+  background: transparent;
+  border: none;
+  color: #078dfa;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  
+  &:hover {
+    color: aqua;
+  }
+`;
+
 const ChainIcon = styled.div<{ background: string }>`
   background: ${(props) => props.background};
   width: 12px;
@@ -92,13 +108,13 @@ const CustomConnectButton: React.FC = () => {
         return (
           <WalletContainer isReady={ready}>
             {!connected ? (
-              <StyledButton onClick={openConnectModal} type="button">
+              <Button onClick={openConnectModal} type="button">
                 Connect Wallet
-              </StyledButton>
+              </Button>
             ) : chain.unsupported ? (
-              <StyledButton onClick={openChainModal} type="button">
+              <Button onClick={openChainModal} type="button">
                 Wrong network
-              </StyledButton>
+              </Button>
             ) : (
               <>
                 <StyledButton onClick={openChainModal} type="button">
