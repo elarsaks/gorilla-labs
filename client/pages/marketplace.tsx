@@ -45,6 +45,29 @@ const images = [
   "rome",
   "tech_lab",
 ];
+
+const DevCard = styled.div`
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: scale 0.7s;
+  color: orange;
+  min-height: 350px;
+  text-align: center;
+  
+  &:hover {
+    color: aqua;
+    border: 1px solid aqua;
+    background-color: rgba(0, 0, 0, 0.9);
+
+    cursor: pointer;
+    scale: 1.05;
+  }
+`;
+
+
 const MarketPlace = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -61,10 +84,10 @@ const MarketPlace = () => {
     <PageContent>
       <GridContainer>
         <PageContentHeader>Marketplace</PageContentHeader>
-        <div style={{ height: '100%' }}>
+        <DevCard >
           <LoadingCube height="300px" />
-          <h3 style={{ color: 'orange' }}>🚧 UNDER DEVELOPMENT 🚧</h3>
-        </div>
+          <h3 >🚧 UNDER DEVELOPMENT 🚧</h3>
+        </DevCard>
 
         {
           images.map((image, index) =>
