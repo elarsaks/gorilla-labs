@@ -1,4 +1,4 @@
-import NFTCard from "../components/ui/NFTCard";
+import NFTCard from "../components/shared/NFTCard";
 import React from "react";
 import styled from "styled-components";
 

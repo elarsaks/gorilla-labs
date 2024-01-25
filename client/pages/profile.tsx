@@ -1,5 +1,5 @@
-import NFTCard from "../components/ui/NFTCard";
-import ProfileCard from "../components/ui/ProfileCard"
+import NFTCard from "../components/shared/NFTCard";
+import ProfileCard from "../components/ProfileCard"
 import React from "react";
 import styled from "styled-components";
 import { useSession } from 'next-auth/react';

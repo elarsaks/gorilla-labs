@@ -1,7 +1,7 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaPlus, FaStore, FaUser } from "react-icons/fa";
 
-import { NavButton } from "../components/ui/NavButton";
+import { NavButton } from "../components/shared/NavButton";
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
