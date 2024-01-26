@@ -97,7 +97,7 @@ const Home = () => {
         <NavButton
           icon={<FaGithub />}
           text={"Source Code"}
-          onClick={() => openInNewTab("https://github.com/elarsaks")}
+          onClick={() => openInNewTab("https://github.com/elarsaks/gorilla-labs")}
           marginleft="0px"
           marginright="0px"
           hideTextOnMobile={false}
