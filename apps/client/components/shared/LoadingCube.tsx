@@ -1,4 +1,4 @@
-import { BoxGeometry, EdgesGeometry, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { BoxGeometry, EdgesGeometry, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer } from '@/node_modules/@types/three';
 import React, { useEffect, useRef } from 'react';
 
 const LoadingCube: React.FC<{ height: string }> = ({ height }) => {
