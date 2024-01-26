@@ -17,7 +17,7 @@ jobs:
         run: echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
 
       - name: Build Docker image
-        run: docker build -t elarsaks/gorilla-labs-client:${{ github.sha }} ./client
+        run: docker build -t elarsaks/gorilla-labs-client:${{ github.sha }} ./apps/client
 
       - name: Push Docker image to Docker Hub
         run: docker push elarsaks/gorilla-labs-client:${{ github.sha }}
