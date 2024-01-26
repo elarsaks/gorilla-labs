@@ -1,6 +1,19 @@
 version: "3.8"
 
 services:
+  gorilla-labs-nginx:
+    image: nginx:alpine
+    container_name: gorilla-labs-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./keys:/etc/nginx/ssl
+    restart: always
+    networks:
+      - gorilla-net
+
   gorilla-labs-client:
     container_name: gorilla-labs-client
     build:
@@ -20,18 +33,25 @@ services:
     networks:
       - gorilla-net
 
-  gorilla-labs-nginx:
-    image: nginx:alpine
-    container_name: gorilla-labs-nginx
+  gorilla-labs-api:
+    container_name: gorilla-labs-api
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./keys:/etc/nginx/ssl
+      - "4000:4000"
+    environment:
+      - "TODO: DB Details"
     restart: always
+    volumes:
+      - ./api:/app
+      - ./api/node_modules:/app/node_modules
     networks:
       - gorilla-net
+
+    # TODO: DB
+    # TODO: Vloumes for DB
+    # TODO: volumes for Node modules
 
 networks:
   gorilla-net:
