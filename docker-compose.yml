@@ -1,34 +1,76 @@
 version: "3.8"
 
 services:
-  gorilla-labs-client:
-    container_name: gorilla-labs-client
+  # Load Balancer
+  # gorilla-labs-nginx:
+  #   image: nginx:alpine
+  #   container_name: gorilla-labs-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+  #     - ./keys:/etc/nginx/ssl
+  #   restart: always
+  #   networks:
+  #     - gorilla-net
+
+  # # Client
+  # gorilla-labs-client:
+  #   container_name: gorilla-labs-client
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - WATCHPACK_POLLING=true
+  #     - NEXTAUTH_URL=${NEXTAUTH_URL}
+  #     - NEXT_LINKEDIN_CLIENT_ID=${NEXT_LINKEDIN_CLIENT_ID}
+  #     - NEXT_LINKEDIN_CLIENT_SECRET=${NEXT_LINKEDIN_CLIENT_SECRET}
+  #   restart: always
+  #   volumes:
+  #     - ./client:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - gorilla-net
+
+  # API
+  gorilla-labs-api:
+    container_name: gorilla-labs-api
     build:
-      context: ./client
+      context: ./api
       dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000"
+      - "4000:4000"
     environment:
-      - WATCHPACK_POLLING=true
-      - NEXTAUTH_URL=${NEXTAUTH_URL}
-      - NEXT_LINKEDIN_CLIENT_ID=${NEXT_LINKEDIN_CLIENT_ID}
-      - NEXT_LINKEDIN_CLIENT_SECRET=${NEXT_LINKEDIN_CLIENT_SECRET}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${POSTGRES_DB}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_USER=${POSTGRES_USER}
     restart: always
     volumes:
-      - ./client:/app
-      - ./client/node_modules:/app/node_modules
+      - ./api:/app
+      - /app/node_modules
     networks:
       - gorilla-net
+    depends_on:
+      - postgres
 
-  gorilla-labs-nginx:
-    image: nginx:alpine
-    container_name: gorilla-labs-nginx
+  # DB
+  postgres:
+    build:
+      context: ./data
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "80:80"
-      - "443:443"
+      - "5432:5432"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./keys:/etc/nginx/ssl
+      - postgres_data:/var/lib/postgresql/data
     restart: always
     networks:
       - gorilla-net
@@ -36,3 +78,6 @@ services:
 networks:
   gorilla-net:
     driver: bridge
+
+volumes:
+  postgres_data:
