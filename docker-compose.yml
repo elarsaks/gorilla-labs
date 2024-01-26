@@ -31,11 +31,11 @@ services:
     restart: always
     volumes:
       - ./client:/app
-      - ./client/node_modules:/app/node_modules
+      - /app/node_modules
     networks:
       - gorilla-net
 
-  #API
+  # API
   gorilla-labs-api:
     container_name: gorilla-labs-api
     build:
@@ -44,28 +44,38 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - "TODO: DB Details"
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${POSTGRES_DB}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_USER=${POSTGRES_USER}
     restart: always
     volumes:
       - ./api:/app
-      - ./api/node_modules:/app/node_modules
+      - /app/node_modules
     networks:
       - gorilla-net
+    depends_on:
+      - postgres
 
   # DB
   postgres:
     image: postgres
     environment:
-      POSTGRES_DB: yourdbname
-      POSTGRES_USER: youruser
-      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
-
-    # TODO: DB
-    # TODO: Vloumes for DB
-    # TODO: volumes for Node modules
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - gorilla-net
 
 networks:
   gorilla-net:
     driver: bridge
+
+volumes:
+  postgres_data:
