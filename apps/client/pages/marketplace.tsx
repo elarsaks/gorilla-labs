@@ -92,7 +92,7 @@ const MarketPlace = () => {
           <NFTCard
             type="EXISTING"
             key={index}
-            image={`/assets/nft-images-webp/${image}.webp`}
+            image={`https://gorilla-labs-nfts.s3.eu-north-1.amazonaws.com/${image}.webp`}
             name={capitalize(image.split(".")[0])}
             description={`This is a description of the ${image} NFT.`}
             network="Ethereum"
