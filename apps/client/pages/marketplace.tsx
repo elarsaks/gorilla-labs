@@ -99,7 +99,7 @@ const Marketplace: React.FC<MarketplaceProps> = ({ nfts }) => {
 
   return (
     <PageContent>
-      {/* <GridContainer>
+      <GridContainer>
         <PageContentHeader>Marketplace</PageContentHeader>
         <DevCard>
           <LoadingCube height="300px" />
