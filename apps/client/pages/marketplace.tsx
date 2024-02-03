@@ -21,7 +21,7 @@ const PageContent = styled.div`
 
 const PageContentHeader = styled.h1`
   color: white;
-  grid-column: 1 / -1; 
+  grid-column: 1 / -1;
   text-align: start;
 `;
 
@@ -31,8 +31,8 @@ const GridContainer = styled.div`
   grid-gap: 1.5rem;
   padding: 1rem;
   border: 1px solid white;
-  border-radius: 8px; 
-  background-color: rgba(0, 0, 0, 0.5); 
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const images = [
@@ -56,7 +56,7 @@ const DevCard = styled.div`
   color: orange;
   min-height: 350px;
   text-align: center;
-  
+
   &:hover {
     color: aqua;
     border: 1px solid aqua;
@@ -66,7 +66,6 @@ const DevCard = styled.div`
     scale: 1.05;
   }
 `;
-
 
 const MarketPlace = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -84,23 +83,22 @@ const MarketPlace = () => {
     <PageContent>
       <GridContainer>
         <PageContentHeader>Marketplace</PageContentHeader>
-        <DevCard >
+        <DevCard>
           <LoadingCube height="300px" />
-          <h3 >🚧 UNDER DEVELOPMENT 🚧</h3>
+          <h3>🚧 UNDER DEVELOPMENT 🚧</h3>
         </DevCard>
 
-        {
-          images.map((image, index) =>
-            <NFTCard
-              type='EXISTING'
-              key={index}
-              image={`/assets/nft-images-webp/${image}.webp`}
-              name={capitalize(image.split(".")[0])}
-              description={`This is a description of the ${image} NFT.`}
-              network="Ethereum"
-              price="0.05 ETH"
-            />
-          )}
+        {images.map((image, index) => (
+          <NFTCard
+            type="EXISTING"
+            key={index}
+            image={`https://gorilla-labs-nfts.s3.eu-north-1.amazonaws.com/${image}.webp`}
+            name={capitalize(image.split(".")[0])}
+            description={`This is a description of the ${image} NFT.`}
+            network="Ethereum"
+            price="0.05 ETH"
+          />
+        ))}
       </GridContainer>
     </PageContent>
   );
