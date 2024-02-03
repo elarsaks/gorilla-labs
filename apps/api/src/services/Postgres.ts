@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 
-class DatabaseService {
+class PostgresService {
     private pool: Pool;
 
     constructor() {
@@ -34,4 +34,4 @@ class DatabaseService {
     // Add other utility methods for database operations as needed
 }
 
-export default new DatabaseService();
+export default new PostgresService();

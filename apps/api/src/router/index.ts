@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 
+import NFTController from '../controllers/NFTController'
+
 // TODO: Routes
 // import AuthController from './controllers/AuthController';
 // import ProfileController from './controllers/ProfileController';
@@ -7,6 +9,7 @@ import express, { Request, Response } from 'express';
 // import MintController from './controllers/MintController';
 // import BuyController from './controllers/BuyController';
 // import SellController from './controllers/SellController';
+
 
 const router = express.Router();
 
@@ -20,6 +23,7 @@ const handleSell = (req: Request, res: Response) => res.send('Sell Route');
 
 // Route definitions
 router.get('/auth', handleAuth);
+router.get('/nfts', NFTController.getAllNFTs);
 router.get('/profile', handleProfile);
 router.post('/upload', handleUpload);
 router.post('/mint', handleMint);
