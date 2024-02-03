@@ -100,6 +100,7 @@ resource "aws_eip" "gorilla_labs_eip" {
 }
 
 # TODO: Use extra non destroyable volume for the SQL
+# TODO: Add here S3 buckets
 # resource "aws_ebs_volume" "gorilla_labs_ebs" {
 #   availability_zone = "eu-north-1a"
 #   size              = 10
