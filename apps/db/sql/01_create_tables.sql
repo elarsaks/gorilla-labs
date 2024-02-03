@@ -15,7 +15,7 @@ CREATE TABLE Category (
 
 -- Wallet Table
 CREATE TABLE Wallet (
-    wallet_id VARCHAR(42) PRIMARY KEY NOT NULL,
+    wallet_id VARCHAR(64) PRIMARY KEY NOT NULL,
     user_id VARCHAR(124) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(email)
 );
@@ -23,7 +23,7 @@ CREATE TABLE Wallet (
 -- NFT Table
 CREATE TABLE NFT (
     nft_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    wallet_id VARCHAR(42),
+    wallet_id VARCHAR(64),
     owner_id VARCHAR(124) NOT NULL,
     category_id INT NOT NULL,
     name VARCHAR(64) NOT NULL,
