@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+import { GetServerSideProps } from "next";
 import LoadingCube from "../components/shared/LoadingCube";
 import NFTCard from "../components/NFTCard";
+import fetchNFTs from "./api/nfts/index";
 import styled from "styled-components";
 
 const PageContent = styled.div`
@@ -67,7 +69,21 @@ const DevCard = styled.div`
   }
 `;
 
-const MarketPlace = () => {
+type MarketplaceProps = {
+  nfts: NFT[];
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const nfts = await fetchNFTs();
+    return { props: { nfts } };
+  } catch (error) {
+    console.error("Failed to fetch NFTs:", error);
+    return { props: { nfts: [] } };
+  }
+};
+
+const Marketplace: React.FC<MarketplaceProps> = ({ nfts }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   function capitalize(str: string) {
@@ -88,13 +104,13 @@ const MarketPlace = () => {
           <h3>🚧 UNDER DEVELOPMENT 🚧</h3>
         </DevCard>
 
-        {images.map((image, index) => (
+        {nfts.map((nft, index) => (
           <NFTCard
             type="EXISTING"
             key={index}
-            image={`https://gorilla-labs-nfts.s3.eu-north-1.amazonaws.com/${image}.webp`}
-            name={capitalize(image.split(".")[0])}
-            description={`This is a description of the ${image} NFT.`}
+            image={nft.img_link}
+            name={nft.name}
+            description={nft.description}
             network="Ethereum"
             price="0.05 ETH"
           />
@@ -104,4 +120,4 @@ const MarketPlace = () => {
   );
 };
 
-export default MarketPlace;
+export default Marketplace;
