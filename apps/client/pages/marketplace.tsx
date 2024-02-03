@@ -6,6 +6,8 @@ import NFTCard from "../components/NFTCard";
 import fetchNFTs from "./api/nfts/index";
 import styled from "styled-components";
 
+// import NFTCard from "../components/shared/NFTCard";
+
 const PageContent = styled.div`
   margin-left: auto;
   margin-right: auto;
@@ -97,7 +99,7 @@ const Marketplace: React.FC<MarketplaceProps> = ({ nfts }) => {
 
   return (
     <PageContent>
-      <GridContainer>
+      {/* <GridContainer>
         <PageContentHeader>Marketplace</PageContentHeader>
         <DevCard>
           <LoadingCube height="300px" />
