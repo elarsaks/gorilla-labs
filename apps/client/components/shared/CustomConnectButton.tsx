@@ -3,7 +3,6 @@ import { FaWallet } from "react-icons/fa"; // Importing FaWallet as the wallet i
 import React from "react";
 import styled from "styled-components";
 
-// Define styled components
 const StyledButton = styled.button`
   display: flex;
   align-items: center;
@@ -34,7 +33,7 @@ const Button = styled.button`
   text-transform: uppercase;
   font-weight: bold;
   display: flex;
-  
+
   &:hover {
     color: aqua;
   }
@@ -64,7 +63,7 @@ type ComponentType = React.ComponentType<ComponentProps>;
 
 // Higher-order function to filter out non-DOM props
 const withFilteredProps = (Component: ComponentType) => {
-  return ({ isReady, ...props }: { isReady: boolean;[key: string]: any }) => (
+  return ({ isReady, ...props }: { isReady: boolean; [key: string]: any }) => (
     <Component
       {...props}
       style={{

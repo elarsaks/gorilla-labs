@@ -12,16 +12,16 @@ interface NavButtonProps {
 }
 
 const StyledButton = styled.button<{
-  marginleft?: string;
-  marginright?: string;
-  hideTextOnMobile: boolean;
+  $marginleft?: string;
+  $marginright?: string;
+  $hideTextOnMobile: boolean;
 }>`
   background: transparent;
   border: none;
   color: white;
   cursor: pointer;
-  margin-left: ${(props) => props.marginleft || '1rem'};
-  margin-right: ${(props) => props.marginright || '1rem'};
+  margin-left: ${(props) => props.$marginleft || "1rem"};
+  margin-right: ${(props) => props.$marginright || "1rem"};
   font-size: 1rem;
   font-family: Arial, sans-serif;
   text-transform: uppercase;
@@ -31,7 +31,9 @@ const StyledButton = styled.button<{
 
   span {
     margin-left: 0.5rem;
-    ${(props) => props.hideTextOnMobile && `
+    ${(props) =>
+      props.$hideTextOnMobile &&
+      `
       @media (max-width: 768px) {
         display: none;
       }
@@ -48,14 +50,19 @@ const StyledButton = styled.button<{
 `;
 
 export const NavButton: React.FC<NavButtonProps> = ({
-  icon, text, hideTextOnMobile, marginleft, marginright, onClick
+  icon,
+  text,
+  hideTextOnMobile,
+  marginleft,
+  marginright,
+  onClick,
 }) => {
   return (
     <StyledButton
       onClick={onClick}
-      marginleft={marginleft}
-      marginright={marginright}
-      hideTextOnMobile={hideTextOnMobile}
+      $marginleft={marginleft}
+      $marginright={marginright}
+      $hideTextOnMobile={hideTextOnMobile}
     >
       {icon}
       <span>{text}</span>
