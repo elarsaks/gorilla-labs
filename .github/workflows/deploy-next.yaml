@@ -54,4 +54,4 @@ jobs:
               -e NEXT_LINKEDIN_CLIENT_SECRET=${{ secrets.NEXT_LINKEDIN_CLIENT_SECRET }} \
               elarsaks/gorilla-labs-client:${{ github.sha }}
             # Cleanup unused Docker images to free up space
-            docker image prune -f --filter "label!=keep"
+            docker image prune -af
