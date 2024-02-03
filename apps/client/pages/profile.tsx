@@ -1,7 +1,7 @@
 import { signOut, useSession } from "next-auth/react";
 
 import CustomConnectButton from "@/components/shared/CustomConnectButton";
-import NFTCard from "../components/shared/NFTCard";
+import NFTCard from "../components/NFTCard";
 import React from "react";
 import styled from "styled-components";
 
@@ -15,8 +15,8 @@ const PageContent = styled.div`
   align-items: center;
   border: 1px solid white;
   border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.5); 
-  min-width:70vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  min-width: 70vw;
 
   // Hide scrollbar for Webkit browsers
   &::-webkit-scrollbar {
@@ -43,8 +43,8 @@ const ProfileImage = styled.img`
 
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column; 
-  justify-content: space-around; 
+  flex-direction: column;
+  justify-content: space-around;
   align-items: flex-start;
   border-right: 1px solid white;
   height: 100%;
@@ -61,7 +61,7 @@ const Button = styled.button<{
   background: transparent;
   border: none;
   color: ${(props) => props.color};
-  cursor: ${(props) => props.color === '#ffffff' ? '' : 'pointer'};
+  cursor: ${(props) => (props.color === "#ffffff" ? "" : "pointer")};
   font-size: 1rem;
   font-family: Arial, sans-serif;
   text-transform: uppercase;
@@ -69,7 +69,7 @@ const Button = styled.button<{
   display: flex;
 
   &:hover {
-    color: ${(props) => props.color === '#ffffff' ? 'ffffff' : 'aqua'};
+    color: ${(props) => (props.color === "#ffffff" ? "ffffff" : "aqua")};
   }
 `;
 
@@ -83,7 +83,7 @@ const GridContainer = styled.div`
 
 const Profile = () => {
   const { data: session } = useSession();
-  const logOut = () => signOut({ callbackUrl: '/' })
+  const logOut = () => signOut({ callbackUrl: "/" });
 
   return (
     <PageContent>
@@ -92,21 +92,23 @@ const Profile = () => {
         <ButtonContainer>
           <Button color="#ffffff">{session?.user?.name || "User Name"}</Button>
           <CustomConnectButton /> {/* //TODO: Fix this component naming*/}
-          <Button color="#fc324a" onClick={logOut}>Log Out!</Button>
+          <Button color="#fc324a" onClick={logOut}>
+            Log Out!
+          </Button>
         </ButtonContainer>
       </PageContentHeader>
 
       <GridContainer>
         <NFTCard
-          type={'CREATE'}
+          type={"CREATE"}
           image={``}
-          name={'Create'}
+          name={"Create"}
           description={`This is a description of the  NFT.`}
           network="Ethereum"
           price="0.05 ETH"
         />
       </GridContainer>
-    </PageContent >
+    </PageContent>
   );
 };
 

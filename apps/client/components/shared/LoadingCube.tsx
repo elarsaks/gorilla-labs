@@ -1,81 +1,71 @@
-import {
-  BoxGeometry,
-  EdgesGeometry,
-  LineBasicMaterial,
-  LineSegments,
-  Mesh,
-  MeshBasicMaterial,
-  PerspectiveCamera,
-  Scene,
-  WebGLRenderer,
-} from "three";
-import React, { useEffect, useRef } from "react";
+import styled, { keyframes } from "styled-components";
+
+import React from "react";
+
+const rotateCube = keyframes`
+  from {
+    transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(0deg) rotateZ(0deg);
+  }
+`;
+
+const Cube = styled.div`
+  width: 100px;
+  height: 100px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: ${rotateCube} 5s infinite linear;
+`;
+
+const Face = styled.div`
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(0, 255, 255, 0.2);
+  border: 1px solid aqua;
+`;
+
+const Front = styled(Face)`
+  transform: rotateY(0deg) translateZ(50px);
+`;
+const Back = styled(Face)`
+  transform: rotateY(180deg) translateZ(50px);
+`;
+const Right = styled(Face)`
+  transform: rotateY(90deg) translateZ(50px);
+`;
+const Left = styled(Face)`
+  transform: rotateY(-90deg) translateZ(50px);
+`;
+const Top = styled(Face)`
+  transform: rotateX(90deg) translateZ(50px);
+`;
+const Bottom = styled(Face)`
+  transform: rotateX(-90deg) translateZ(50px);
+`;
 
 const LoadingCube: React.FC<{ height: string }> = ({ height }) => {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const requestRef = useRef<number>();
-
-  useEffect(() => {
-    const currentRef = mountRef.current;
-    if (!currentRef) return;
-
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(
-      75,
-      currentRef.clientWidth / parseInt(height),
-      0.1,
-      1000
-    );
-    const renderer = new WebGLRenderer({ alpha: true });
-    renderer.setSize(currentRef.clientWidth, parseInt(height));
-
-    const geometry = new BoxGeometry(2, 2, 2);
-
-    // Create edge material
-    const edgeMaterial = new LineBasicMaterial({ color: "aqua" });
-    const edges = new EdgesGeometry(geometry);
-    const cubeEdges = new LineSegments(edges, edgeMaterial);
-    scene.add(cubeEdges);
-
-    // Create face material
-    const faceMaterial = new MeshBasicMaterial({
-      color: "aqua",
-      opacity: 0.2,
-      transparent: true,
-    });
-    const cubeMesh = new Mesh(geometry, faceMaterial);
-    scene.add(cubeMesh);
-
-    camera.position.z = 5;
-
-    const animate = () => {
-      cubeEdges.rotation.x += 0.01;
-      cubeEdges.rotation.y += 0.01;
-      cubeMesh.rotation.x += 0.01;
-      cubeMesh.rotation.y += 0.01;
-
-      renderer.render(scene, camera);
-      requestRef.current = requestAnimationFrame(animate);
-    };
-
-    const handleResize = () => {
-      camera.aspect = currentRef.clientWidth / parseInt(height);
-      camera.updateProjectionMatrix();
-      renderer.setSize(currentRef.clientWidth, parseInt(height));
-    };
-
-    window.addEventListener("resize", handleResize);
-    currentRef.appendChild(renderer.domElement);
-    requestRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
-      window.removeEventListener("resize", handleResize);
-      currentRef.removeChild(renderer.domElement);
-    };
-  }, [height]);
-
-  return <div ref={mountRef} style={{ height, width: "100%" }} />;
+  return (
+    <div
+      style={{
+        height,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Cube>
+        <Front />
+        <Back />
+        <Right />
+        <Left />
+        <Top />
+        <Bottom />
+      </Cube>
+    </div>
+  );
 };
 
 export default LoadingCube;
