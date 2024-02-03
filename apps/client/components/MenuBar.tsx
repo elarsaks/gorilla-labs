@@ -1,8 +1,8 @@
 import { FaPlus, FaStore, FaUser } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from "next-auth/react";
 
-import { NavButton } from './shared/NavButton'
+import { NavButton } from "./shared/NavButton";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -53,7 +53,7 @@ export const Icons = styled.div`
 const MenuBar: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
-  const { data: session, } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     setIsClient(true);
@@ -68,10 +68,12 @@ const MenuBar: React.FC = () => {
 
   const handleAuthClick = () => {
     if (session) {
-      console.log(session)
-      router.push('/profile');
+      console.log(session);
+      router.push("/profile");
     } else {
-      signIn('linkedin', { callbackUrl: '/profile' });
+      signIn("linkedin", {
+        callbackUrl: "http://localhost/api/auth/callback/linkedin",
+      });
     }
   };
 
@@ -100,12 +102,11 @@ const MenuBar: React.FC = () => {
 
         <NavButton
           icon={<FaUser />}
-          text={session?.user?.name || 'Log In'}
+          text={session?.user?.name || "Log In"}
           onClick={handleAuthClick}
           hideTextOnMobile={true}
           marginright="2em"
         />
-
       </NavBar>
     </>
   );
