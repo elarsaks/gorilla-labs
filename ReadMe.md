@@ -11,7 +11,7 @@
 This is an NFT marketplace that I am building, just to expand and showcase my skills. Based on the current idea, it will be built using Next & Node.js written in TypeScript and running on AWS EC2.
 
 Here is an topological overview of what is implemented at the moment:
-![Architecture](https://raw.githubusercontent.com/elarsaks/gorilla-labs/main/docs/architecture/architecture.png)
+![Architecture](https://raw.githubusercontent.com/elarsaks/gorilla-labs/main/docs/architecture/topology.png)
 
 # Installation and running
 
