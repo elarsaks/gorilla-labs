@@ -1,0 +1,54 @@
+name: Build and Deploy Node Docker Image to EC2
+
+on:
+  push:
+    branches:
+      - deploy-node
+
+jobs:
+  build-next-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t elarsaks/gorilla-labs-api:${{ github.sha }} ./apps/client
+
+      - name: Push Docker image to Docker Hub
+        run: docker push elarsaks/gorilla-labs-api:${{ github.sha }}
+
+  deploy-to-ec2:
+    needs: build-next-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Pull & Run From Hub
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          username: ubuntu
+          script: |
+            echo ${{ secrets.DOCKER_REGISTRY_TOKEN }} | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
+            docker pull elarsaks/gorilla-labs-api:${{ github.sha }}
+            # Check if the container is running and stop it
+            if docker ps -q -f name=gorilla-labs-api; then
+                docker stop gorilla-labs-api
+            fi
+            # Check if the container exists and remove it
+            if docker ps -a -q -f name=gorilla-labs-api; then
+                docker rm gorilla-labs-api
+            fi
+            # Run the new gorilla-labs-api container with restart policy, connected to the network
+            docker run -d --restart=always \
+              --name gorilla-labs-api \
+              --network gorilla-labs-network \
+              -p 3000:3000 \
+             # TODO: env secrets - DB credentials
+              elarsaks/gorilla-labs-api:${{ github.sha }}
+            # Cleanup unused Docker images to free up space
+            docker image prune -af
