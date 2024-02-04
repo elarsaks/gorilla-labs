@@ -48,7 +48,6 @@ jobs:
               --name gorilla-labs-api \
               --network gorilla-labs-network \
               -p 3000:3000 \
-              # TODO: env secrets - DB credentials
               elarsaks/gorilla-labs-api:${{ github.sha }}
 
       - name: Cleanup Unused Docker Images
