@@ -1,6 +1,3 @@
-
-# TODO: This file!
-
 # Build Stage
 FROM node:20.10-alpine as builder
 WORKDIR /app
@@ -15,5 +12,5 @@ WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
-EXPOSE 3000
+EXPOSE 4000
 CMD ["npm", "start"]
