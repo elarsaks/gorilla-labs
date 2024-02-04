@@ -15,6 +15,7 @@ const router = express.Router();
 
 // Placeholder handler functions
 const handleAuth = (req: Request, res: Response) => res.send('Auth Route');
+const handleTest = (req: Request, res: Response) => res.send('OK!')
 const handleProfile = (req: Request, res: Response) => res.send('Profile Route');
 const handleUpload = (req: Request, res: Response) => res.send('Upload Route');
 const handleMint = (req: Request, res: Response) => res.send('Mint Route');
@@ -23,6 +24,7 @@ const handleSell = (req: Request, res: Response) => res.send('Sell Route');
 
 // Route definitions
 router.get('/auth', handleAuth);
+router.get('/test', handleTest)
 router.get('/nfts', NFTController.getAllNFTs);
 router.get('/profile', handleProfile);
 router.post('/upload', handleUpload);

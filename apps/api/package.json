@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc",
+    "dev": "nodemon --legacy-watch --polling-interval 1000 --exec ts-node ./src/app.ts",
     "serve": "node dist/app.js",
     "start": "node build/index.js",
-    "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

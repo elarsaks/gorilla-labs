@@ -32,7 +32,7 @@ const CardImage = styled.div<CardImageProps>`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 50%;
+  height: 300px;
   width: 100%;
   position: relative;
 
