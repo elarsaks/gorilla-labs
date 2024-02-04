@@ -42,7 +42,7 @@ jobs:
             docker run -d --restart=always \
               --name gorilla-labs-api \
               --network gorilla-labs-network \
-              -p 3000:3000 \
+              -p 4000:4000 \
               elarsaks/gorilla-labs-api:${{ github.sha }}
             # Cleanup unused Docker images
             docker image prune -af
