@@ -6,7 +6,7 @@ on:
       - deploy-node
 
 jobs:
-  build-next-image:
+  build-node-api-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,7 @@ jobs:
         run: docker push elarsaks/gorilla-labs-api:${{ github.sha }}
 
   deploy-to-ec2:
-    needs: build-next-image
+    needs: build-node-api-image
     runs-on: ubuntu-latest
     steps:
       - name: Deploy New Image and Cleanup
