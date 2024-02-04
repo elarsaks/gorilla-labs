@@ -1,4 +1,4 @@
-# Build Stage
+# Builder Stage
 FROM node:20.10-alpine as builder
 WORKDIR /app
 COPY package.json package-lock.json* yarn.lock* ./
