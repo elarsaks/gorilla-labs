@@ -1,6 +1,9 @@
+-- Add extension for generating UUIDs
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Users Table
 CREATE TABLE Users (
-    email VARCHAR(124) PRIMARY KEY NOT NULL,
+    email VARCHAR(255) PRIMARY KEY NOT NULL,
     name VARCHAR(64) NOT NULL
 );
 
@@ -12,15 +15,15 @@ CREATE TABLE Category (
 
 -- Wallet Table
 CREATE TABLE Wallet (
-    wallet_id SERIAL PRIMARY KEY NOT NULL,
+    wallet_id VARCHAR(64) PRIMARY KEY NOT NULL,
     user_id VARCHAR(124) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(email)
 );
 
 -- NFT Table
 CREATE TABLE NFT (
-    nft_id SERIAL PRIMARY KEY NOT NULL,
-    wallet_id INT NOT NULL,
+    nft_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    wallet_id VARCHAR(64),
     owner_id VARCHAR(124) NOT NULL,
     category_id INT NOT NULL,
     name VARCHAR(64) NOT NULL,

@@ -1,15 +1,5 @@
-import { on } from "events";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-
-interface NFTCardProps {
-  description: string;
-  image: string;
-  name: string;
-  network: string;
-  price: string;
-  type: string; //TODO: Use ENUM-s
-}
 
 const Card = styled.div`
   border: 1px solid #ddd;
@@ -19,7 +9,9 @@ const Card = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: scale 0.7s;
   color: #ffffff;
-  min-height: 350px;
+  height: 500px;
+  width: 300px;
+  overflow: hidden;
 
   &:hover {
     color: aqua;
@@ -28,6 +20,36 @@ const Card = styled.div`
 
     cursor: pointer;
     scale: 1.05;
+  }
+`;
+
+interface CardImageProps {
+  $backgroundImage: string;
+}
+
+const CardImage = styled.div<CardImageProps>`
+  background-image: url(${(props) => props.$backgroundImage});
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 300px;
+  width: 100%;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.5s ease;
+    opacity: 1;
+  }
+
+  &:hover::before {
+    opacity: 0;
   }
 `;
 
@@ -41,8 +63,7 @@ const CreateContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: auto;
+  height: 250px;
   display: block;
 `;
 
@@ -74,28 +95,38 @@ const Price = styled.div`
   color: #28a745;
 `;
 
+interface NFTCardProps {
+  description: string;
+  image: string;
+  name: string;
+  network: string;
+  price: string;
+  type: string; //TODO: Use ENUM-s
+}
+
 const NFTCard: React.FC<NFTCardProps> = ({
   description,
   image,
   name,
   network,
   price,
-  type = 'EXISTING',
+  type = "EXISTING",
 }) => {
   const router = useRouter();
   const onClickCreate = () => router.push("/create");
-  // TODO: onClickNFT
+  // TODO: onClickNF
 
   return (
     <Card>
-      {type === 'CREATE' ? (
+      <CardImage $backgroundImage={image} />
+      {type === "CREATE" ? (
         <CreateContainer onClick={onClickCreate}>
           <h1>+</h1>
           <h3>Create NFT</h3>
         </CreateContainer>
       ) : (
         <div>
-          <Image src={image} alt={name} />
+          {/* <Image src={image} alt={name} /> */}
           <Info>
             <Name>{name}</Name>
             <Description>{description}</Description>
@@ -107,6 +138,5 @@ const NFTCard: React.FC<NFTCardProps> = ({
     </Card>
   );
 };
-
 
 export default NFTCard;
