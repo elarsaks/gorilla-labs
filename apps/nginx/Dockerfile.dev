@@ -1,0 +1,8 @@
+FROM nginx:latest
+
+COPY development.conf /etc/nginx/default.conf
+
+EXPOSE 80
+EXPOSE 443
+
+CMD ["nginx", "-g", "daemon off;"]

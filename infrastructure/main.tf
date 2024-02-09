@@ -30,6 +30,9 @@ resource "aws_security_group" "gorilla_labs_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  // TODO: Close port 3000 
+  // TOOD: Route port 4000 through NGINX
+
   ingress {
     description = "Custom HTTP on port 3000"
     from_port   = 3000

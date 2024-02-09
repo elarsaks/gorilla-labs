@@ -3,13 +3,15 @@ version: "3.8"
 services:
   # Load Balancer
   gorilla-labs-nginx:
-    image: nginx:alpine
+    build:
+      context: ./apps/nginx
+      dockerfile: Dockerfile.dev
     container_name: gorilla-labs-nginx
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./apps/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./apps/nginx/development.conf:/etc/nginx/conf.d/default.conf
       - ./keys:/etc/nginx/ssl
     restart: always
     networks:
@@ -36,44 +38,44 @@ services:
       - gorilla-net
 
   # API
-  gorilla-labs-api:
-    container_name: gorilla-labs-api
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile.dev
-    ports:
-      - "4000:4000"
-    environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_NAME=${POSTGRES_DB}
-      - DB_PASSWORD=${POSTGRES_PASSWORD}
-      - DB_USER=${POSTGRES_USER}
-    restart: always
-    volumes:
-      - ./apps/api:/app
-      - /app/node_modules
-    networks:
-      - gorilla-net
-    depends_on:
-      - postgres
+  # gorilla-labs-api:
+  #   container_name: gorilla-labs-api
+  #   build:
+  #     context: ./apps/api
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - "4000:4000"
+  #   environment:
+  #     - DB_HOST=postgres
+  #     - DB_PORT=5432
+  #     - DB_NAME=${POSTGRES_DB}
+  #     - DB_PASSWORD=${POSTGRES_PASSWORD}
+  #     - DB_USER=${POSTGRES_USER}
+  #   restart: always
+  #   volumes:
+  #     - ./apps/api:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - gorilla-net
+  #   depends_on:
+  #     - postgres
 
-  # DB
-  postgres:
-    build:
-      context: ./apps/db
-      dockerfile: Dockerfile
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: always
-    networks:
-      - gorilla-net
+  # # DB
+  # postgres:
+  #   build:
+  #     context: ./apps/db
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: always
+  #   networks:
+  #     - gorilla-net
 
 networks:
   gorilla-net:
