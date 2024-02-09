@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-COPY production.conf /etc/nginx/default.conf
+COPY production.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 EXPOSE 443
