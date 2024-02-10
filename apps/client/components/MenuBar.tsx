@@ -1,6 +1,6 @@
-import { FaPlus, FaStore, FaUser } from "react-icons/fa";
+import { FaStore, FaUser } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import { NavButton } from "./shared/NavButton";
 import styled from "styled-components";
@@ -34,7 +34,7 @@ export const Logo = styled.div`
   cursor: pointer;
 
   img {
-    height: 40px; // You can adjust this value as needed
+    height: 40px;
   }
 `;
 
@@ -64,7 +64,10 @@ const MenuBar: React.FC = () => {
   }
 
   const handleLogoClick = () => router.push("/");
-  const navigateToMarketplace = () => router.push("/marketplace");
+  const navigateToMarketplace = () => {
+    console.log("Clicked");
+    router.push("/marketplace");
+  };
 
   const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
