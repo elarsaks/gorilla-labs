@@ -10,6 +10,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "5000:5000"
     volumes:
       - ./keys:/etc/nginx/ssl
     restart: always
@@ -37,27 +38,27 @@ services:
       - gorilla-net
 
   # API
-  # gorilla-labs-api:
-  #   container_name: gorilla-labs-api
-  #   build:
-  #     context: ./apps/api
-  #     dockerfile: Dockerfile.dev
-  #   ports:
-  #     - "4000:4000"
-  #   environment:
-  #     - DB_HOST=postgres
-  #     - DB_PORT=5432
-  #     - DB_NAME=${POSTGRES_DB}
-  #     - DB_PASSWORD=${POSTGRES_PASSWORD}
-  #     - DB_USER=${POSTGRES_USER}
-  #   restart: always
-  #   volumes:
-  #     - ./apps/api:/app
-  #     - /app/node_modules
-  #   networks:
-  #     - gorilla-net
-  #   depends_on:
-  #     - postgres
+  gorilla-labs-api:
+    container_name: gorilla-labs-api
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${POSTGRES_DB}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_USER=${POSTGRES_USER}
+    restart: always
+    volumes:
+      - ./apps/api:/app
+      - /app/node_modules
+    networks:
+      - gorilla-net
+    # depends_on:
+    #   - postgres
 
   # # DB
   # postgres:
