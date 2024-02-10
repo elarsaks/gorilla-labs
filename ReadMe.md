@@ -37,10 +37,11 @@ docker-compose up --build
 **Accessing the Application:**
 The application will be accessible on the following ports:
 
-| App         | URL                                                      | Notes                                                                                       |
-| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Nginx       | [http://localhost:80](http://localhost:80)               | Web server access point.                                                                    |
-| Nginx safe  | [https://localhost:443](https://localhost:443)           | Secure web server access point.                                                             |
-| Next JS     | [http://localhost:3000](http://localhost:3000)           | Frontend development server.                                                                |
-| Node JS     | [http://localhost:4000/test](http://localhost:4000/test) | Backend API endpoint example.                                                               |
-| Postgre SQL | N/A                                                      | PostgreSQL does not provide a browsable URL. Use `localhost:5432` for database connections. |
+| App              | URL                                                      | Notes                                                                                       |
+| ---------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Nginx (Next)     | [http://localhost:80](http://localhost:80)               | Access Next via Nginx over http.                                                            |
+| Nginx (Next SSL) | [https://localhost:443](https://localhost:443)           | Access Next via Nginx over https.                                                           |
+| Nginx (Node SSL) | [https://localhost:5000](https://localhost:5000)         | Access Node via Nginx over https.                                                           |
+| Next JS          | [http://localhost:3000](http://localhost:3000)           | Frontend development server.                                                                |
+| Node JS          | [http://localhost:4000/test](http://localhost:4000/test) | Backend API endpoint example.                                                               |
+| Postgre SQL      | N/A                                                      | PostgreSQL does not provide a browsable URL. Use `localhost:5432` for database connections. |
