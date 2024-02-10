@@ -10,7 +10,16 @@
 
 This project is an NFT marketplace designed to broaden and demonstrate my technical skills. It is currently in development, so appearances may vary over time.
 
-Below is a topological overview of the planned implementation:
+## Live Links
+
+| App     | URL                                                                      |
+| ------- | ------------------------------------------------------------------------ |
+| Next JS | [https://gorilla-labs.com](https://gorilla-labs.com)                     |
+| Node JS | [https://gorilla-labs.com:5000/test](https://gorilla-labs.com:5000/test) |
+
+<br>
+
+**Topological overview of the planned implementation:** 👇
 ![Architecture](https://raw.githubusercontent.com/elarsaks/gorilla-labs/main/docs/architecture/topology.png)
 
 ## Installation and Running
