@@ -66,13 +66,15 @@ const MenuBar: React.FC = () => {
   const handleLogoClick = () => router.push("/");
   const navigateToMarketplace = () => router.push("/marketplace");
 
+  const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
+
   const handleAuthClick = () => {
     if (session) {
       console.log(session);
       router.push("/profile");
     } else {
       signIn("linkedin", {
-        callbackUrl: "http://localhost/api/auth/callback/linkedin",
+        callbackUrl: NEXTAUTH_URL,
       });
     }
   };
