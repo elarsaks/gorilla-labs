@@ -30,18 +30,26 @@ resource "aws_security_group" "gorilla_labs_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    description = "Custom HTTP on port 3000"
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  # ingress {
+  #   description = "Custom HTTP on port 3000"
+  #   from_port   = 3000
+  #   to_port     = 3000
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
 
   ingress {
     description = "Custom HTTP on port 4000"
     from_port   = 4000
     to_port     = 4000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Custom HTTP on port 5000"
+    from_port   = 5000
+    to_port     = 5000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -91,8 +99,6 @@ resource "aws_instance" "gorilla_labs" {
     "Gorilla Labs" = "true"
   }
 }
-
-
 
 resource "aws_eip" "gorilla_labs_eip" {
   instance = aws_instance.gorilla_labs.id
