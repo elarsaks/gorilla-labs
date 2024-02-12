@@ -8,7 +8,7 @@ const PageContainer = styled.div`
   justify-content: start;
   width: 100vw;
   height: 100vh;
-  align - items: center;
+  align-items: center;
   position: absolute;
   top: 0;
   left: 0;

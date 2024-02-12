@@ -1,7 +1,5 @@
 name: Build and Deploy Docker Image to EC2
 
-# !Dont use this for now!
-
 on:
   push:
     branches:
@@ -65,5 +63,6 @@ jobs:
              -p 80:80 \
              -p 8080:8080 \
              -p 443:443 \
+             -p 5000:5000 \
              -v /home/ubuntu/ssl:/etc/nginx/ssl \
              elarsaks/gorilla-labs-nginx:${{ github.sha }}

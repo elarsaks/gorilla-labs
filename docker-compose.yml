@@ -2,20 +2,20 @@ version: "3.8"
 
 services:
   # Load Balancer
-  gorilla-labs-nginx:
-    build:
-      context: ./apps/nginx
-      dockerfile: Dockerfile.dev
-    container_name: gorilla-labs-nginx
-    ports:
-      - "80:80"
-      - "443:443"
-      - "5000:5000"
-    volumes:
-      - ./keys:/etc/nginx/ssl
-    restart: always
-    networks:
-      - gorilla-net
+  # gorilla-labs-nginx:
+  #   build:
+  #     context: ./apps/nginx
+  #     dockerfile: Dockerfile.dev
+  #   container_name: gorilla-labs-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #     - "5000:5000"
+  #   volumes:
+  #     - ./keys:/etc/nginx/ssl
+  #   restart: always
+  #   networks:
+  #     - gorilla-net
 
   # Client
   gorilla-labs-client:
